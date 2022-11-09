@@ -1,0 +1,51 @@
+<%-  include('includes/head'); %>
+<%-  include('includes/nav'); %>
+
+
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="col-lg-6">
+            <form action="/turma/create" method="POST">
+                <div class="mb-3">
+                  <label class="form-label">id turma</label>
+                  <input type="number" class="form-control" name="id_turma">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">número da turma</label>
+                  <input type="number" class="form-control" name="turma">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Ano</label>
+                  <input type="number" class="form-control" name="ano">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Semestre</label>
+                  <input type="number" class="form-control" name="semestre">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Disciplina</label>
+                  <select name="cod_disc" class="form-select">
+                    <% disciplinas.forEach(disc => { %>
+                        <option value="<%= disc.cod_disc %>"><%= disc.nome %></option>
+                    <% }); %>
+                  </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Estudantes</label>
+                    <% estudantes.forEach(est => { %>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="<%= est.mat_estudante %>" name="estudantes" id="<%= est.mat_estudante %>">
+                        <label class="form-check-label" for="<%= est.mat_estudante %>">
+                            <%= est.primeiro_nome + " " + est.sobrenome %>
+                        </label>
+                    </div>
+                    <% }); %>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Criar turma</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('includes/footer') %>

@@ -1,0 +1,225 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model assite {
+  nickname String  @db.VarChar(10)
+  id_video Int
+  usuario  usuario @relation(fields: [nickname], references: [nickname], onDelete: Cascade, map: "fk_nickname")
+  video    video   @relation(fields: [id_video], references: [id_video], onDelete: NoAction, onUpdate: NoAction, map: "fk_video")
+
+  @@id([nickname, id_video], map: "pk_assite")
+}
+
+model disponibilidade {
+  id_video      Int
+  id_plataforma Int
+  plataforma    plataforma @relation(fields: [id_plataforma], references: [id_plataforma], onDelete: Cascade, map: "fk_plataforma")
+  video         video      @relation(fields: [id_video], references: [id_video], onDelete: Cascade, map: "fk_video")
+
+  @@id([id_video, id_plataforma], map: "pk_disponibilidade")
+}
+
+model episodio {
+  numero    Int   @default(autoincrement())
+  temporada Int
+  id_serie  Int
+  id_video  Int   @unique
+  serie     serie @relation(fields: [id_serie], references: [id_serie], onDelete: Cascade, map: "fk_serie")
+  video     video @relation(fields: [id_video], references: [id_video], onDelete: Cascade, map: "fk_video")
+
+  @@id([numero, temporada, id_serie], map: "pk_episodio")
+}
+
+model estudio {
+  id_estudio Int        @id(map: "pk_estudio") @default(autoincrement())
+  descricao  String     @db.VarChar(300)
+  nome       String     @db.VarChar(30)
+  filme      filme[]
+  serie      serie[]
+  trabalha   trabalha[]
+}
+
+model favorita_filme {
+  usuario_nickname String  @db.VarChar(10)
+  id_filme         Int
+  filme            filme   @relation(fields: [id_filme], references: [id_filme], onDelete: Cascade, map: "fk_filme")
+  usuario          usuario @relation(fields: [usuario_nickname], references: [nickname], onDelete: Cascade, map: "fk_usuario")
+
+  @@id([usuario_nickname, id_filme], map: "pk_favorita_filme")
+}
+
+model favorita_personagem {
+  usuario_nickname String     @db.VarChar(10)
+  id_personagem    Int
+  personagem       personagem @relation(fields: [id_personagem], references: [id_personagem], onDelete: Cascade, map: "fk_personagem")
+  usuario          usuario    @relation(fields: [usuario_nickname], references: [nickname], onDelete: Cascade, map: "fk_usuario")
+
+  @@id([usuario_nickname, id_personagem], map: "pk_favorita_personagem")
+}
+
+model favorita_serie {
+  usuario_nickname String  @db.VarChar(10)
+  id_serie         Int
+  serie            serie   @relation(fields: [id_serie], references: [id_serie], onDelete: Cascade, map: "fk_serie")
+  usuario          usuario @relation(fields: [usuario_nickname], references: [nickname], onDelete: Cascade, map: "fk_usuario")
+
+  @@id([usuario_nickname, id_serie], map: "pk_favorita_serie")
+}
+
+model filme {
+  id_filme             Int              @id(map: "pk_filme") @default(autoincrement())
+  capa                 Bytes?
+  titulos_equivalentes String[]         @db.VarChar
+  id_video             Int              @unique
+  id_estudio           Int?
+  estudio              estudio?         @relation(fields: [id_estudio], references: [id_estudio], map: "fk_estudio")
+  video                video            @relation(fields: [id_video], references: [id_video], onDelete: Cascade, map: "fk_video")
+  favorita_filme       favorita_filme[]
+}
+
+model genero {
+  id_genero Int         @id(map: "pk_genero") @default(autoincrement())
+  nome      tiposgenero
+  video_tem video_tem[]
+}
+
+model participacao {
+  id_ator       Int
+  id_personagem Int
+  id_video      Int
+  pessoa        pessoa     @relation(fields: [id_ator], references: [id_pessoa], onDelete: Cascade, map: "fk_ator")
+  personagem    personagem @relation(fields: [id_personagem], references: [id_personagem], onDelete: Cascade, map: "fk_personagem")
+  video         video      @relation(fields: [id_video], references: [id_video], onDelete: Cascade, map: "fk_video")
+
+  @@id([id_ator, id_personagem, id_video], map: "pk_participacao")
+}
+
+model personagem {
+  id_personagem       Int                   @id(map: "pk_personagem") @default(autoincrement())
+  nome                String                @db.VarChar(45)
+  descricao           String                @db.VarChar(300)
+  imagem              Bytes?
+  apelidos            String[]              @db.VarChar
+  favorita_personagem favorita_personagem[]
+  participacao        participacao[]
+}
+
+model pessoa {
+  id_pessoa    Int            @id(map: "pk_pessoa") @default(autoincrement())
+  nome         String         @db.VarChar(45)
+  descricao    String         @db.VarChar(300)
+  foto         Bytes?
+  participacao participacao[]
+  trabalha     trabalha[]
+  video        video[]
+}
+
+model plataforma {
+  id_plataforma   Int               @id(map: "pk_plataforma") @default(autoincrement())
+  nome            String            @db.VarChar(45)
+  link            String            @db.VarChar(100)
+  disponibilidade disponibilidade[]
+}
+
+model revisa {
+  usuario_nickname String  @db.VarChar(10)
+  id_video         Int
+  nota             Float
+  texto            String? @db.VarChar(500)
+  usuario          usuario @relation(fields: [usuario_nickname], references: [nickname], onDelete: Cascade, map: "fk_nickname")
+  video            video   @relation(fields: [id_video], references: [id_video], onDelete: Cascade, map: "fk_video")
+
+  @@id([usuario_nickname, id_video], map: "pk_revisa")
+}
+
+model segue {
+  seguidor_nickname                        String  @db.VarChar(10)
+  seguido_nickname                         String  @db.VarChar(10)
+  usuario_segue_seguido_nicknameTousuario  usuario @relation("segue_seguido_nicknameTousuario", fields: [seguido_nickname], references: [nickname], onDelete: Cascade, map: "fk_seguido")
+  usuario_segue_seguidor_nicknameTousuario usuario @relation("segue_seguidor_nicknameTousuario", fields: [seguidor_nickname], references: [nickname], onDelete: Cascade, map: "fk_seguidor")
+
+  @@id([seguidor_nickname, seguido_nickname], map: "pk_segue")
+}
+
+model serie {
+  id_serie             Int              @id(map: "pk_serie") @default(autoincrement())
+  titulo               String           @db.VarChar(60)
+  resumo               String           @db.VarChar(300)
+  capa                 Bytes?
+  titulos_equivalentes String[]         @db.VarChar
+  id_estudio           Int?
+  estudio              estudio?         @relation(fields: [id_estudio], references: [id_estudio], map: "fk_estudio")
+  episodio             episodio[]
+  favorita_serie       favorita_serie[]
+}
+
+model trabalha {
+  id_pessoa  Int
+  id_estudio Int
+  estudio    estudio @relation(fields: [id_estudio], references: [id_estudio], onDelete: Cascade, map: "fk_estudio")
+  pessoa     pessoa  @relation(fields: [id_pessoa], references: [id_pessoa], onDelete: Cascade, map: "fk_pessoa")
+
+  @@id([id_pessoa, id_estudio], map: "pk_trabalha")
+}
+
+model usuario {
+  nickname                               String                @id(map: "pk_usuario") @db.VarChar(10)
+  email                                  String                @unique(map: "uq_email") @db.VarChar(45)
+  primeiro_nome                          String                @db.VarChar(30)
+  sobrenome                              String                @db.VarChar(60)
+  data_nascimento                        DateTime              @db.Date
+  bio                                    String?               @db.VarChar(300)
+  foto                                   Bytes?
+  assite                                 assite[]
+  favorita_filme                         favorita_filme[]
+  favorita_personagem                    favorita_personagem[]
+  favorita_serie                         favorita_serie[]
+  revisa                                 revisa[]
+  segue_segue_seguido_nicknameTousuario  segue[]               @relation("segue_seguido_nicknameTousuario")
+  segue_segue_seguidor_nicknameTousuario segue[]               @relation("segue_seguidor_nicknameTousuario")
+}
+
+model video {
+  id_video        Int               @id(map: "pk_video") @default(autoincrement())
+  titulo          String            @db.VarChar(45)
+  tempo           DateTime          @db.Time(6)
+  data_de_estreia DateTime          @db.Timestamp(6)
+  resumo          String            @db.VarChar(300)
+  id_diretor      Int?
+  pessoa          pessoa?           @relation(fields: [id_diretor], references: [id_pessoa], map: "fk_pessoa")
+  assite          assite[]
+  disponibilidade disponibilidade[]
+  episodio        episodio?
+  filme           filme?
+  participacao    participacao[]
+  revisa          revisa[]
+  video_tem       video_tem[]
+}
+
+model video_tem {
+  id_genero Int
+  id_video  Int
+  genero    genero @relation(fields: [id_genero], references: [id_genero], onDelete: Cascade, map: "fk_genero")
+  video     video  @relation(fields: [id_video], references: [id_video], onDelete: Cascade, map: "fk_video")
+
+  @@id([id_genero, id_video], map: "pk_video_tem")
+}
+
+enum tiposgenero {
+  A__o              @map("Ação")
+  Aventura
+  Com_dia           @map("Comédia")
+  Drama
+  Fantasia
+  Terror
+  Mist_rio          @map("Mistério")
+  Romance
+  Fic__o_Cient_fica @map("Ficção Científica")
+  Sobrenatural
+}
