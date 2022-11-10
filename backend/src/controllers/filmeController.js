@@ -1,8 +1,8 @@
-const Turma = require('../models/turmaModel');
+const Filme = require('../models/filmeModel');
 
 exports.index = async (req,res) => {
     try {
-        const turma = new Turma(req.body);
+        const turma = new Filme(req.body);
     
         res.locals.disciplinas = await turma.getDisciplinas();
         res.locals.estudantes = await turma.getEstudantes();
@@ -12,16 +12,17 @@ exports.index = async (req,res) => {
     }
 }
 
-exports.createTurma = async(req,res) => {
+exports.createFilme = async(req,res) => {
     try {
-        const turma = new Turma(req.body)
-        await turma.createTurma();
+        const turma = new Filme(req.body)
+        await turma.createFilme();
         if (turma.errors.length > 0){
             return res.json(turma.errors)
         }
-        return res.json(turma.turma)
+        return res.json(turma.filme)
     } catch(e) {
-        return res.json(e)
+        console.log(e)
+        return res.json({e})
     }
     
 }
@@ -47,3 +48,5 @@ exports.turma = async(req,res) => {
         console.log(e)
     }
 }
+
+/* consegue ler aqui? */

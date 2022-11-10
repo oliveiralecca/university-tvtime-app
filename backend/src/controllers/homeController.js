@@ -1,22 +1,12 @@
 const Home = require('../models/homeModel')
 
-exports.index = (req,res) => {
-    res.render('index');
-}
-
-exports.userRegister = async (req, res) => {
+exports.index = async(req,res) => {
     try {
         const home = new Home(req.body);
-        await home.createUser();
-
-        if (home.errors.length > 0) {
-            return res.json(home.errors);
-        }
-        console.log(home.user)
-        return res.json([home.user,home.student]);
+        await home.findAllFilmes();
+        return res.json(home.filmes);
     } catch(e) {
-        console.log(e);
-        return res.json(e);
+        console.log(e)
     }
 }
 
@@ -26,7 +16,7 @@ exports.userList = async(req,res) =>{
         await home.findAllUsers();
         return res.json(home.user);
     } catch(e) {
-        console.log(e)
+        console.log(e);
         return res.json(e)
     }
 }
