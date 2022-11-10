@@ -4,7 +4,7 @@ import {
   Route,
 } from "react-router-dom";
 
-import { Details } from "./pages/details";
+import { MovieDetails } from "./pages/movieDetails";
 import { Dashboard } from "./pages/dashboard";
 
 export function AppRoutes() {

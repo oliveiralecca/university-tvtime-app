@@ -5,7 +5,7 @@ import { Container } from "../../components/Container";
 import { Title } from "../../components/Title";
 import { useDataResults } from "../../contexts/dataContext";
 
-export function Details() {
+export function Form() {
   const { users } = useDataResults();
   const { user } = useParams();
 
