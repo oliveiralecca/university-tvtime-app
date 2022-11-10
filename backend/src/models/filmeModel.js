@@ -2,12 +2,12 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient();
 
-class Turma {
+class Filme {
     constructor(body, params){
         this.body = body;
         this.params = params;
         this.errors = [];
-        this.turma = null;
+        this.filme = null;
     }
     async getDisciplinas() {
         const disciplinas = await prisma.disciplina.findMany();
@@ -22,28 +22,27 @@ class Turma {
         return userEstudantes
     }
 
-    async createTurma() {
-        const {id_turma, turma, ano, semestre, cod_disc, estudantes} = this.body
-        this.turma = await prisma.turma.findUnique({where: {id_turma: Number(id_turma)}});
-        if (this.turma) {
-            this.errors.push("Turma já existente");
-            return;
-        }
+    async createFilme() {
+        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes} = this.body
 
-        this.turma = await prisma.turma.create({
+        const [horas,minutos] = tempo.split(':');
+        const tempoDate = new Date();
+        tempoDate.setUTCHours(Number(horas),Number(minutos));
+        const video = await prisma.video.create({
             data: {
-                id_turma: Number(id_turma),
-                turma: Number(turma),
-                ano: Number(ano),
-                semestre: Number(semestre),
-                cod_disc,
-                cursa: {
-                    create: estudantes.map(est => {
-                        return {mat_estudante: est}
-                    }),
-                },
+                titulo: titulo,
+                tempo: tempoDate,
+                data_de_estreia: new Date(data_de_estreia),
+                resumo: resumo,
             }
-        })
+        });
+        const filme = await prisma.filme.create({
+            data: {
+                titulos_equivalentes: titulos_equivalentes,
+                id_video: video.id_video,
+            }
+        });
+        this.filme = {...video, ...filme};
     }
 
     async getTurmas() {
@@ -68,4 +67,4 @@ class Turma {
     }
 }
 
-module.exports = Turma
+module.exports = Filme;
