@@ -5,14 +5,14 @@ import {
 } from "react-router-dom";
 
 import { Details } from "./pages/details";
-import { Home } from "./pages/home";
+import { Dashboard } from "./pages/dashboard";
 
 export function AppRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />              
-        <Route path="/details/:user" element={<Details />} />
+        <Route path="/" element={<Dashboard />} />              
+        {/* <Route path="/details/:user" element={<Details />} /> */}
       </Routes>
     </Router>
   )

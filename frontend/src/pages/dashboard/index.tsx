@@ -4,12 +4,22 @@ import { Title } from "../../components/Title";
 import { User } from "../../components/User";
 import { useDataResults } from "../../contexts/dataContext";
 
-export function Home() {
+export function Dashboard() {
   const { users, isLoading } = useDataResults();
 
   return (
     <Container>
-      <Title>TV Time App</Title>
+      <aside>navbar</aside>
+      <main>
+        <header>
+          <span>Dashboard</span>
+          <span>Foto</span>
+        </header>
+        <section>filtros gêneros</section>
+        <section>filmes</section>
+      </main>
+
+      {/* <Title>TV Time App</Title>
       {isLoading ? (
         <Oval
           height={35}
@@ -21,7 +31,7 @@ export function Home() {
         />
       ) : (
         users?.map((user) => <User key={user?.id} id={user.id} />)
-      )}
+      )} */}
     </Container>
   )
 }
