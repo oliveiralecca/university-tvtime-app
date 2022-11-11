@@ -1,10 +1,23 @@
 import { useParams } from "react-router-dom";
-import { Content } from "../../components/Content";
+import { Form }  from '@unform/web';
 
-export function Form() {
+import { Content } from "../../components/Content";
+import { Input } from "./components/Input";
+import { initialData } from "./components/Input/mockInitialData";
+
+export function RegisterForm() {
+  function handleSubmit(data) {
+    console.log(data);
+  }
+
   return (
     <Content>
-      <p>oi</p>
+      <Form initialData={initialData ?? {}} onSubmit={handleSubmit}>
+        <Input name="titulo" />
+        <Input name="capa" type="file" accept="image/png, image/jpeg" />
+
+        <button type="submit">salvar</button>
+      </Form>
     </Content>
-  )
+  );
 }
