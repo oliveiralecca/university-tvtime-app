@@ -3,68 +3,71 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient();
 
 class Filme {
-    constructor(body, params){
+    constructor(body){
         this.body = body;
-        this.params = params;
         this.errors = [];
         this.filme = null;
     }
-    async getDisciplinas() {
-        const disciplinas = await prisma.disciplina.findMany();
-        return disciplinas;
+    static async getAllGeneros() {
+        const generos = await prisma.genero.findMany();
+        return generos;
     } 
-    async getEstudantes() {
-        const estudantes = await prisma.estudante.findMany();
-        let userEstudantes = await Promise.all(estudantes.map(async est => {
-            let user = await prisma.usuario.findUnique({where: {cpf: est.cpf}})
-            return {...est, ...user}
-        }));
-        return userEstudantes
-    }
 
     async createFilme() {
-        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes} = this.body
+        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes,capa, generos} = this.body
 
         const [horas,minutos] = tempo.split(':');
         const tempoDate = new Date();
+        let titulosEquivalentesArray = titulos_equivalentes?titulos_equivalentes.split(',').map(tit => tit.trim()):undefined;
         tempoDate.setUTCHours(Number(horas),Number(minutos));
+        let generosInt = generos.map(gen => Number(gen))
         const video = await prisma.video.create({
             data: {
                 titulo: titulo,
                 tempo: tempoDate,
                 data_de_estreia: new Date(data_de_estreia),
                 resumo: resumo,
+                video_tem: generosInt.length>0?{
+                    create: generosInt.map(gen => {
+                        return {id_genero: gen};
+                    }),
+                }:undefined,
             }
         });
         const filme = await prisma.filme.create({
             data: {
-                titulos_equivalentes: titulos_equivalentes,
+                titulos_equivalentes: titulosEquivalentesArray,
                 id_video: video.id_video,
+                capa: capa?capa:undefined
             }
         });
         this.filme = {...video, ...filme};
     }
 
-    async getTurmas() {
-        return await prisma.turma.findMany()
+    async getFilmes() {
+        const filmes = await prisma.filme.findMany();
+        this.filme = await Promise.all(filmes.map(async film => {
+            let video = await prisma.video.findUnique({where: {id_video: film.id_video}});
+            return {...video, ...film};
+        }))
     }
 
-    async getTurma() {
-        const { id_turma } = this.params
-        this.turma = await prisma.turma.findUnique({where: {id_turma: Number(id_turma)}});
-        if (!this.turma) {
-            this.errors.push("Turma não existe");
+    async getFilme(id) {
+        const filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
+        console.log(!filme)
+        if (!filme) {
+            this.errors.push("Filme não encontrado");
             return;
         }
-        const cursa = await prisma.cursa.findMany({where: {id_turma: this.turma.id_turma}})
+        const video = await prisma.video.findUnique({where: {id_video: filme.id_video}});
+        const video_tem = await prisma.video_tem.findMany({where: {id_video: video.id_video}});
 
-        let userStudents = await Promise.all(cursa.map(async cursa => {
-            const estudante = await prisma.estudante.findUnique({where: {mat_estudante: cursa.mat_estudante}});
-            const user = await prisma.usuario.findUnique({where: {cpf: estudante.cpf}});
-            return {...user, ...estudante};
-        }));
-        return userStudents
-    }
+        let generos = video_tem.length>0?await Promise.all(video_tem.map(async relation => {
+            return await prisma.genero.findUnique({where: {id_genero: relation.id_genero}})
+        })):[]
+        this.filme = {...video,...filme,generos}
+     }
+
 }
 
 module.exports = Filme;

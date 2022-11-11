@@ -1,52 +1,53 @@
 const Filme = require('../models/filmeModel');
 
 exports.index = async (req,res) => {
-    try {
-        const turma = new Filme(req.body);
-    
-        res.locals.disciplinas = await turma.getDisciplinas();
-        res.locals.estudantes = await turma.getEstudantes();
-        res.render('createTurma');
+    try {  
+        const generos = await Filme.getAllGeneros();
+        res.json(generos);
     } catch(e) {
         console.log(e)
     }
 }
 
-exports.createFilme = async(req,res) => {
+exports.register = async(req,res) => {
     try {
-        const turma = new Filme(req.body)
-        await turma.createFilme();
-        if (turma.errors.length > 0){
-            return res.json(turma.errors)
+        const filme = new Filme(req.body)
+        await filme.createFilme();
+        if (filme.errors.length > 0){
+            return res.json({errors: filme.errors})
         }
-        return res.json(turma.filme)
+        return res.json(filme.filme)
     } catch(e) {
         console.log(e)
-        return res.json({e})
+        return res.json({errors: e})
     }
     
 }
 
-exports.turmas = async(req,res) => {
+exports.list = async(req,res) => {
     try {
-        const turma = new Turma(req.body);
+        const filme = new Filme(req.body);
     
-        res.locals.turmas = await turma.getTurmas();
-        res.render('turmas');
+        await filme.getFilmes();
+        const generos = await Filme.getAllGeneros();
+        res.json({filmes:filme.filme,generos});
     } catch(e) {
         console.log(e)
     }
 }
 
-exports.turma = async(req,res) => {
+exports.single = async(req,res) => {
+    if (!req.params.id_filme) return res.json({errors: "Id não encontrado"})
     try {
-        const turma = new Turma(req.body, req.params);
-        res.locals.estudantes = await turma.getTurma();
-        res.locals.turma = turma.turma;
-        res.render('turma');
+        const filme = new Filme(req.body);
+        await filme.getFilme(req.params.id_filme)
+        if (filme.errors.length > 0){
+            return res.json({errors: filme.errors});
+        }
+        res.json(filme.filme);
     } catch(e) {
         console.log(e)
+        res.json({errors: "Rota inválida"});
     }
 }
 
-/* consegue ler aqui? */
