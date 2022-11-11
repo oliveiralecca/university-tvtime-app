@@ -6,12 +6,15 @@ import {
 
 import { MovieDetails } from "./pages/movieDetails";
 import { Dashboard } from "./pages/dashboard";
+import { Form } from "./pages/form";
+import { AppSkeleton } from "./layouts/AppSkeleton";
 
 export function AppRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />              
+        <Route path="/" element={<AppSkeleton children={<Dashboard />} />} />              
+        <Route path="/cadastrar/novo" element={<AppSkeleton children={<Form />} />} />              
         {/* <Route path="/details/:user" element={<Details />} /> */}
       </Routes>
     </Router>
