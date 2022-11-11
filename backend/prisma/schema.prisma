@@ -212,14 +212,15 @@ model video_tem {
 }
 
 enum tiposgenero {
-  A__o              @map("Ação")
-  Aventura
-  Com_dia           @map("Comédia")
+  Action
+  Adventure
+  Comedy
   Drama
-  Fantasia
-  Terror
-  Mist_rio          @map("Mistério")
+  Fantasy
+  Horror
+  Mistery
   Romance
-  Fic__o_Cient_fica @map("Ficção Científica")
-  Sobrenatural
+  Sci_Fi       @map("Sci-Fi")
+  Supernatural
+  Thriller
 }
