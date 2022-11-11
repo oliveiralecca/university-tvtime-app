@@ -27,7 +27,11 @@ export const StyledContainer = styled.div`
       justify-content: space-between;
     }
 
-    section:nth-child(2) {
+    div {
+      flex: 1;
+    }
+
+    /* section:nth-child(2) {
       flex: 0 100px;
       background: red;
     }
@@ -35,6 +39,6 @@ export const StyledContainer = styled.div`
     section:last-child {
       flex: 1;
       background: pink;
-    }
+    } */
   }
 `;
