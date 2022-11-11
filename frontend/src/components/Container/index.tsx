@@ -9,6 +9,10 @@ export function Container({ children }: ContainerProps) {
   return (
     <S.StyledContainer>
       {children}
+      
+      
+ 
+ 
     </S.StyledContainer>
   )
 }
