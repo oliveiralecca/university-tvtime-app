@@ -5,14 +5,15 @@ import { NavBar } from "./components/NavBar";
 
 type AppSkeletonProps = {
   children: ReactNode;
+  title: string;
 }
 
-export function AppSkeleton({ children }: AppSkeletonProps) {
+export function AppSkeleton({ children, title }: AppSkeletonProps) {
   return (
     <Container>
       <NavBar />
       <main>
-        <Header />
+        <Header title={title} />
         {children}
       </main>
     </Container>

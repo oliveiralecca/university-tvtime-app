@@ -13,8 +13,8 @@ export function AppRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AppSkeleton children={<Dashboard />} />} />              
-        <Route path="/cadastrar/novo" element={<AppSkeleton children={<Form />} />} />              
+        <Route path="/" element={<AppSkeleton children={<Dashboard />} title="Dashboard" />} />              
+        <Route path="/cadastrar/novo" element={<AppSkeleton children={<Form />} title="Cadastrar filme" />} />              
         {/* <Route path="/details/:user" element={<Details />} /> */}
       </Routes>
     </Router>
