@@ -2,11 +2,25 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const StyledButton = styled(Link)`
+  display: flex;
+  align-items: center;
+
   text-decoration: none;
-  padding: 5px;
+  color: #fff;
 
-  color: #04D361;
+  gap: 10px;
 
-  border: 1px solid;
-  border-radius: 6px;
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: #fff;
+  }
+
+  &:hover {
+    color: #fe7141;
+
+    svg {
+      fill: #fe7141;
+    }
+  }
 `;

@@ -1,17 +1,28 @@
 import { Button } from "../../../../components/Button";
+import { ArrowLeftIcon } from "../../../../components/Icons";
+import * as S from "./styles";
 
 type HeaderProps = {
   title: string;
-}
+};
 
 export function Header({ title }: HeaderProps) {
   return (
-    <header>
-      <span>
-        {title}
-        {title !== 'Dashboard' && <Button path="/" label="voltar" />}
-      </span>
-      <span>Foto</span>
-    </header>
+    <S.Container>
+      <S.Title>
+        <h1>{title}</h1>
+        {title !== "Dashboard" && (
+          <>
+            <S.Separator />
+            <Button path="/home" label="Voltar" icon={<ArrowLeftIcon />} />
+          </>
+        )}
+      </S.Title>
+
+      <S.ProfilePhoto
+        src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/technologist_1f9d1-200d-1f4bb.png"
+        alt="Profile image"
+      />
+    </S.Container>
   );
 }
