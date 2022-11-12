@@ -4,6 +4,7 @@ import { Dashboard } from "./pages/dashboard";
 import { RegisterForm } from "./pages/form";
 import { AppSkeleton } from "./layouts/AppSkeleton";
 import { Page404 } from "./pages/404";
+import { MovieDetails } from "./pages/movieDetails";
 
 export function AppRoutes() {
   return (
@@ -22,6 +23,11 @@ export function AppRoutes() {
           element={<AppSkeleton children={<RegisterForm />} title="Cadastrar filme" />}
         />
         {/* <Route path="/details/:user" element={<Details />} /> */}
+        <Route 
+          path="/teste/inicio"
+          element={<AppSkeleton children= {<MovieDetails/>} title="Teste"/>}
+          />
+        
         <Route path="*" element={<Page404 />} />
       </Routes>
     </Router>
