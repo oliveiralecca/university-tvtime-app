@@ -51,13 +51,15 @@ exports.single = async(req,res) => {
 exports.update = async(req,res) => {
     if (!req.params.id_genero) return res.json({errors: "Id não encontrado"})
     try {
-        const genero = new Genero(req.body)
+        const genero = new Genero(req)
         await genero.updateGenero(req.params.id_genero);
         if (genero.errors.length > 0){
+            req.file && await Genero.removeImage(req.file.filename);
             return res.json({errors: genero.errors})
         }
         return res.json(genero.genero)
     } catch(e) {
+        req.file && await Genero.removeImage(req.file.filename);
         console.log(e)
         return res.json({errors: "Erro na edição de gênero"})
     }
