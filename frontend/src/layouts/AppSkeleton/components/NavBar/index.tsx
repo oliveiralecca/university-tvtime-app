@@ -16,7 +16,7 @@ export function NavBar() {
         <h4>TV Time</h4>
       </S.Logo>
       <S.Navigation>
-        <NavButton path="/" icon={<AllIcon />} label="Home" />
+        <NavButton path="/home" icon={<AllIcon />} label="Home" />
         <NavButton icon={<MovieIcon />} label="Filme" />
         <NavButton icon={<GenresIcon />} label="Gênero" />
         <NavButton path="/cadastrar" icon={<EditorIcon />} label="Cadastrar" />
