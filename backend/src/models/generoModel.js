@@ -19,11 +19,12 @@ class Genero {
     }
 
     async createGenero(){
-        const {nome, filmes} = this.body;
-        let filmesInt = filmes.map(film => Number(film))
+        const {nome, filmes, icone} = this.body;
+        let filmesInt = filmes?filmes.map(film => Number(film)):[]
         this.genero = await prisma.genero.create({
             data: {
                 nome,
+                icone: icone?icone:undefined,
                 video_tem: filmesInt.length > 0?{
                     create: filmesInt.map(film => {
                         return {id_video: film}
@@ -50,6 +51,37 @@ class Genero {
             return {...video,...filme};
         }));
         this.genero = {...genero,filmes}
+    }
+
+    async updateGenero(id){
+        const genero = await prisma.genero.findUnique({where: {id_genero: Number(id)}});
+        if (!genero) {
+            this.errors.push("Filme não encontrado");
+            return
+        }
+        const {nome, filmes,icone} = this.body;
+        let filmesInt = filmes?filmes.map(film => Number(film)):[]
+        this.genero = await prisma.genero.update({
+            where: {id_genero: genero.id_genero},
+            data: {
+                nome,
+                icone: icone?icone:undefined,
+                video_tem: filmesInt.length > 0?{
+                    create: filmesInt.map(film => {
+                        return {id_video: film}
+                    }),
+                }:undefined,
+            },
+        })
+    }
+
+    async deleteGenero(id) {
+        const genero = await prisma.genero.findUnique({where: {id_genero: Number(id)}});
+        if (!genero) {
+            this.errors.push("Genero não encontrado");
+            return;
+        }
+        await prisma.genero.delete({where: {id_genero: genero.id_genero}});
     }
 
 }

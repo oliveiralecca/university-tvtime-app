@@ -37,6 +37,7 @@ exports.single = async(req,res) => {
     try {
         const genero = new Genero(req.body);
         await genero.getGenero(req.params.id_genero);
+        const filmes = await Genero.getAllFilmes();
         if (genero.errors.length > 0){
             return res.json({errors: genero.errors});
         }
@@ -44,5 +45,36 @@ exports.single = async(req,res) => {
     } catch(e) {
         console.log(e);
         res.json({errors: "Erro na busca por gênero"})
+    }
+}
+
+exports.update = async(req,res) => {
+    if (!req.params.id_genero) return res.json({errors: "Id não encontrado"})
+    try {
+        const genero = new Genero(req.body)
+        await genero.updateGenero(req.params.id_genero);
+        if (genero.errors.length > 0){
+            return res.json({errors: genero.errors})
+        }
+        return res.json(genero.genero)
+    } catch(e) {
+        console.log(e)
+        return res.json({errors: "Erro na edição de gênero"})
+    }
+    
+}
+
+exports.delete = async (req,res) => {
+    if (!req.params.id_genero) return res.json({errors: "Id não encontrado"})
+    try {
+        const genero = new Genero(req.body)
+        await genero.deleteGenero(req.params.id_genero);
+        if (genero.errors.length > 0){
+            return res.json({errors: genero.errors})
+        }
+        return res.json({success: "Gênero deletado com sucesso"})
+    } catch(e) {
+        console.log(e)
+        return res.json({errors: e})
     }
 }
