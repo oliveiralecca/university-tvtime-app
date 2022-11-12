@@ -2,11 +2,13 @@ const express = require('express');
 const route = express.Router();
 
 const filmeController = require('./controllers/filmeController');
-const generoController = require('./controllers/generoController')
+const generoController = require('./controllers/generoController');
+
+const { capaUpload } = require('./middlewares/middleware')
 
 
 route.get("/filme/index", filmeController.index);
-route.post("/filme/register", filmeController.register);
+route.post("/filme/register", capaUpload.single('capa'), filmeController.register);
 route.get("/filme/list", filmeController.list);
 route.get("/filme/list/:id_filme", filmeController.single);
 route.put("/filme/update/:id_filme",filmeController.update);
@@ -18,5 +20,6 @@ route.get("/genero/list", generoController.list)
 route.get("/genero/list/:id_genero", generoController.single);
 route.put("/genero/update/:id_genero",generoController.update);
 route.delete("/genero/delete/:id_genero",generoController.delete);
+
 
 module.exports = route;

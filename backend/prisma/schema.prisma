@@ -65,7 +65,7 @@ model favorita_serie {
 
 model filme {
   id_filme             Int              @id(map: "pk_filme") @default(autoincrement())
-  capa                 Bytes?
+  capa                 String?          @db.VarChar(300)
   titulos_equivalentes String[]         @db.VarChar
   id_video             Int              @unique
   id_estudio           Int?
@@ -77,7 +77,7 @@ model filme {
 model genero {
   id_genero Int         @id(map: "pk_genero") @default(autoincrement())
   nome      tiposgenero
-  icone     Bytes?
+  icone     String?     @db.VarChar(300)
   video_tem video_tem[]
 }
 

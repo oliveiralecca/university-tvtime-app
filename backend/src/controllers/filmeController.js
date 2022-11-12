@@ -11,7 +11,7 @@ exports.index = async (req,res) => {
 
 exports.register = async(req,res) => {
     try {
-        const filme = new Filme(req.body)
+        const filme = new Filme(req)
         await filme.createFilme();
         if (filme.errors.length > 0){
             return res.json({errors: filme.errors})

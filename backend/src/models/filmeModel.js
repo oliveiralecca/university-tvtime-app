@@ -1,10 +1,13 @@
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
+const https = require('https')
+
 
 const prisma = new PrismaClient();
 
 class Filme {
-    constructor(body){
-        this.body = body;
+    constructor(req){
+        this.req = req
+        this.body = req.body;
         this.errors = [];
         this.filme = null;
     }
@@ -14,7 +17,7 @@ class Filme {
     } 
 
     async createFilme() {
-        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes,capa, generos} = this.body
+        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes,capa, generos} = this.body;
 
         const [horas,minutos] = tempo.split(':');
         const tempoDate = new Date();
@@ -22,6 +25,8 @@ class Filme {
         tempoDate.setUTCHours(Number(horas),Number(minutos));
         let generosInt = generos?generos.map(gen => Number(gen)):[];
 
+
+        console.log(this.req.file);
         const video = await prisma.video.create({
             data: {
                 titulo: titulo,
@@ -39,7 +44,7 @@ class Filme {
             data: {
                 titulos_equivalentes: titulosEquivalentesArray,
                 id_video: video.id_video,
-                capa: capa?capa:undefined
+                capa: '/assets/images/' + this.req.file.filename,
             }
         });
         this.filme = {...video, ...filme};
