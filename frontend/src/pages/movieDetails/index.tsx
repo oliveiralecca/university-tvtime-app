@@ -4,6 +4,7 @@ import { Card } from "../../components/Card";
 import { Container } from "../../components/Container";
 import { Title } from "../../components/Title";
 import { useDataResults } from "../../contexts/dataContext";
+import * as S from "./styles"
 
 export function MovieDetails() {
   const { users } = useDataResults();
@@ -17,6 +18,11 @@ export function MovieDetails() {
     <Container>
       <Title>Detalhes {genderIdentify} {firstName}</Title>
       {userDetails && <Card name={userDetails.name} age={userDetails.age} gender={userDetails.gender} />}
+      <S.Container>
+        <section className="escopo">
+          <h1>teste</h1>
+        </section>
+      </S.Container>
       <Button path="/" label="voltar" />
     </Container>
   )
