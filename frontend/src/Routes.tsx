@@ -13,6 +13,10 @@ export function AppRoutes() {
           element={<AppSkeleton children={<Dashboard />} title="Dashboard" />}
         />
         <Route
+          path="/cadastrar"
+          element={<AppSkeleton children={<p>Rota com filmes cadastrados e opção de editar + botão para form de cadastro</p>} title="Filmes cadastrados" />}
+        />
+        <Route
           path="/cadastrar/novo"
           element={<AppSkeleton children={<RegisterForm />} title="Cadastrar filme" />}
         />
