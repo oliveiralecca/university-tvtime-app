@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Dashboard } from "./pages/dashboard";
 import { RegisterForm } from "./pages/form";
 import { AppSkeleton } from "./layouts/AppSkeleton";
+import { Page404 } from "./pages/404";
 
 export function AppRoutes() {
   return (
@@ -21,6 +22,7 @@ export function AppRoutes() {
           element={<AppSkeleton children={<RegisterForm />} title="Cadastrar filme" />}
         />
         {/* <Route path="/details/:user" element={<Details />} /> */}
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </Router>
   );
