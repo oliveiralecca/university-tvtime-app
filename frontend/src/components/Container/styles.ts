@@ -7,11 +7,6 @@ export const StyledContainer = styled.div`
 
   height: calc(100% - 60px);
 
-  aside {
-    flex: 100px 100%;
-    background: green;
-  }
-
   main {
     flex: 1;
     gap: 30px;
