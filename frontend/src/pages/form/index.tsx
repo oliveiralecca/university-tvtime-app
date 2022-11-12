@@ -12,7 +12,7 @@ export function RegisterForm() {
 
   return (
     <Content>
-      <Form initialData={initialData ?? {}} onSubmit={handleSubmit}>
+      <Form initialData={initialData ?? {}} onSubmit={handleSubmit} encType="multipart/form-data">
         <Input name="titulo" />
         <Input name="capa" type="file" accept="image/png, image/jpeg" />
 
