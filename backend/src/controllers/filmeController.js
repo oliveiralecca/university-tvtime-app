@@ -40,7 +40,8 @@ exports.single = async(req,res) => {
     if (!req.params.id_filme) return res.json({errors: "Id não encontrado"})
     try {
         const filme = new Filme(req.body);
-        await filme.getFilme(req.params.id_filme)
+        await filme.getFilme(req.params.id_filme);
+        const generos = await Filme.getAllGeneros();
         if (filme.errors.length > 0){
             return res.json({errors: filme.errors});
         }
@@ -48,6 +49,37 @@ exports.single = async(req,res) => {
     } catch(e) {
         console.log(e)
         res.json({errors: "Rota inválida"});
+    }
+}
+
+exports.update = async(req,res) => {
+    if (!req.params.id_filme) return res.json({errors: "Id não encontrado"})
+    try {
+        const filme = new Filme(req.body)
+        await filme.updateFilme(req.params.id_filme);
+        if (filme.errors.length > 0){
+            return res.json({errors: filme.errors})
+        }
+        return res.json(filme.filme)
+    } catch(e) {
+        console.log(e)
+        return res.json({errors: e})
+    }
+    
+}
+
+exports.delete = async (req,res) => {
+    if (!req.params.id_filme) return res.json({errors: "Id não encontrado"})
+    try {
+        const filme = new Filme(req.body)
+        await filme.deleteFilme(req.params.id_filme);
+        if (filme.errors.length > 0){
+            return res.json({errors: filme.errors})
+        }
+        return res.json({success: "Filme deletado com sucesso"})
+    } catch(e) {
+        console.log(e)
+        return res.json({errors: e})
     }
 }
 
