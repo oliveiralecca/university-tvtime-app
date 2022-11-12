@@ -4,14 +4,14 @@ const route = express.Router();
 const filmeController = require('./controllers/filmeController');
 const generoController = require('./controllers/generoController');
 
-const { capaUpload } = require('./middlewares/middleware')
+const capaUpload = require('./middlewares/capaUpload')
 
 
 route.get("/filme/index", filmeController.index);
-route.post("/filme/register", capaUpload.single('capa'), filmeController.register);
+route.post("/filme/register", capaUpload, filmeController.register);
 route.get("/filme/list", filmeController.list);
 route.get("/filme/list/:id_filme", filmeController.single);
-route.put("/filme/update/:id_filme",filmeController.update);
+route.put("/filme/update/:id_filme",capaUpload,filmeController.update);
 route.delete("/filme/delete/:id_filme",filmeController.delete);
 
 route.get("/genero/index", generoController.index);

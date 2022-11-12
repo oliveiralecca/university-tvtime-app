@@ -14,12 +14,12 @@ exports.register = async(req,res) => {
         const filme = new Filme(req)
         await filme.createFilme();
         if (filme.errors.length > 0){
-            return res.json({errors: filme.errors})
+            return res.status(400).send({errors: filme.errors})
         }
         return res.json(filme.filme)
     } catch(e) {
         console.log(e)
-        return res.json({errors: e})
+        return res.status(400).send({errors: [e]})
     }
     
 }
@@ -37,39 +37,43 @@ exports.list = async(req,res) => {
 }
 
 exports.single = async(req,res) => {
-    if (!req.params.id_filme) return res.json({errors: "Id não encontrado"})
+    if (!req.params.id_filme) return res.status(400).send({errors: ["Id não encontrado"]});
     try {
         const filme = new Filme(req.body);
         await filme.getFilme(req.params.id_filme);
-        const generos = await Filme.getAllGeneros();
         if (filme.errors.length > 0){
-            return res.json({errors: filme.errors});
+            return res.status(400).send({errors: filme.errors});
         }
         res.json(filme.filme);
     } catch(e) {
         console.log(e)
-        res.json({errors: "Rota inválida"});
+        res.status(400).send({errors: ["Rota inválida"]});
     }
 }
 
 exports.update = async(req,res) => {
-    if (!req.params.id_filme) return res.json({errors: "Id não encontrado"})
+    if (!req.params.id_filme) {
+        req.file && await Filme.removeImage(req.file.filename);
+        return res.status(400).send({errors: ["Id não encontrado"]})
+    }
     try {
-        const filme = new Filme(req.body)
+        const filme = new Filme(req)
         await filme.updateFilme(req.params.id_filme);
         if (filme.errors.length > 0){
-            return res.json({errors: filme.errors})
+            req.file && await Filme.removeImage(req.file.filename);
+            return res.status(400).send({errors: filme.errors})
         }
         return res.json(filme.filme)
     } catch(e) {
+        req.file && await Filme.removeImage(req.file.filename);
         console.log(e)
-        return res.json({errors: e})
+        return res.status(400).send({errors: [e]})
     }
     
 }
 
 exports.delete = async (req,res) => {
-    if (!req.params.id_filme) return res.json({errors: "Id não encontrado"})
+    if (!req.params.id_filme) return res.json({errors: ["Id não encontrado"]})
     try {
         const filme = new Filme(req.body)
         await filme.deleteFilme(req.params.id_filme);
@@ -79,7 +83,7 @@ exports.delete = async (req,res) => {
         return res.json({success: "Filme deletado com sucesso"})
     } catch(e) {
         console.log(e)
-        return res.json({errors: e})
+        return res.json({errors: [e]})
     }
 }
 
