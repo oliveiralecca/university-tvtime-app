@@ -7,15 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model assite {
-  nickname String  @db.VarChar(10)
-  id_video Int
-  usuario  usuario @relation(fields: [nickname], references: [nickname], onDelete: Cascade, map: "fk_nickname")
-  video    video   @relation(fields: [id_video], references: [id_video], onDelete: NoAction, onUpdate: NoAction, map: "fk_video")
-
-  @@id([nickname, id_video], map: "pk_assite")
-}
-
 model disponibilidade {
   id_video      Int
   id_plataforma Int
@@ -86,6 +77,7 @@ model filme {
 model genero {
   id_genero Int         @id(map: "pk_genero") @default(autoincrement())
   nome      tiposgenero
+  icone     Bytes?
   video_tem video_tem[]
 }
 
@@ -176,7 +168,7 @@ model usuario {
   data_nascimento                        DateTime              @db.Date
   bio                                    String?               @db.VarChar(300)
   foto                                   Bytes?
-  assite                                 assite[]
+  assiste                                assiste[]
   favorita_filme                         favorita_filme[]
   favorita_personagem                    favorita_personagem[]
   favorita_serie                         favorita_serie[]
@@ -193,7 +185,7 @@ model video {
   resumo          String            @db.VarChar(300)
   id_diretor      Int?
   pessoa          pessoa?           @relation(fields: [id_diretor], references: [id_pessoa], map: "fk_pessoa")
-  assite          assite[]
+  assiste         assiste[]
   disponibilidade disponibilidade[]
   episodio        episodio?
   filme           filme?
@@ -209,6 +201,15 @@ model video_tem {
   video     video  @relation(fields: [id_video], references: [id_video], onDelete: Cascade, map: "fk_video")
 
   @@id([id_genero, id_video], map: "pk_video_tem")
+}
+
+model assiste {
+  nickname String  @db.VarChar(10)
+  id_video Int
+  usuario  usuario @relation(fields: [nickname], references: [nickname], onDelete: Cascade, map: "fk_nickname")
+  video    video   @relation(fields: [id_video], references: [id_video], onDelete: NoAction, onUpdate: NoAction, map: "fk_video")
+
+  @@id([nickname, id_video], map: "pk_assiste")
 }
 
 enum tiposgenero {
