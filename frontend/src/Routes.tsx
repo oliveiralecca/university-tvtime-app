@@ -18,7 +18,7 @@ export function AppRoutes() {
         <Route path="/" element={<Navigate to="/home" />} />
         {/* <Route path="/details/:user" element={<Details />} /> */}
         <Route path="/genero/:genre/detalhes" element={<AppSkeleton children={<GenresDetails />} title="Gênero" />} />
-        <Route path="/filme/:id/:movie/detalhes" element={<AppSkeleton children={<MovieDetails />} title="Filme" />} />
+        <Route path="/filme/:movie/detalhes" element={<AppSkeleton children={<MovieDetails />} title="Filme" />} />
         <Route
           path="/cadastrar"
           element={
