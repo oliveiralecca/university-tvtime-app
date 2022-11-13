@@ -35,7 +35,7 @@ export const Container = styled.div`
   }
 
   .genero > button {
-    text-align: center;
+    
     background-color: #3f3e6d;
     border-color: white;
     border-style: solid;
@@ -43,10 +43,14 @@ export const Container = styled.div`
     border-width: 2px;
     width: 40px;
     height: 50px;
-    margin: 20px;
+    margin: 0 20px;
+    width: 128px;
+    height: 32px;
+    color: white;
   }
 
   h1 {
     text-align: center;
+    margin-bottom: 10px;
   }
 `;

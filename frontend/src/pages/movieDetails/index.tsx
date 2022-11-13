@@ -25,7 +25,7 @@ export function MovieDetails() {
        </div>
        <div className="description">
         <div className="genero">
-         <h1>Titulo do FILME</h1>
+         <h1>Venon 2: Let There Be Carnage</h1>
         <button>Action</button>
         <button>Ficcao</button>
         <button>Adventure</button>
