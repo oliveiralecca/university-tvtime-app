@@ -8,10 +8,8 @@ import {
 } from "react";
 import { UseGetGenresResult, useGetGenres } from "../hooks/useGetGenres";
 import { useGetMovies, UseGetMoviesResult } from "../hooks/useGetMovies";
-import {
-  Movie,
-  UseGetMoviesByGenreResult,
-} from "../pages/dashboard/components/GenresFilters/types";
+import { UseGetMoviesByGenreResult } from "../pages/dashboard/components/GenresFilters/types";
+import { UseGetMovieDetailsResult } from "../pages/dashboard/components/Movies/types";
 
 type DataState = {
   genres: UseGetGenresResult[];
@@ -28,6 +26,12 @@ type DataState = {
   setMovies: Dispatch<SetStateAction<UseGetMoviesResult | undefined>>;
   activeGenre: string;
   setActiveGenre: Dispatch<SetStateAction<string>>;
+  moviesDetails: UseGetMovieDetailsResult | undefined;
+  setMoviesDetails: Dispatch<
+    SetStateAction<UseGetMovieDetailsResult | undefined>
+  >;
+  isMoviesDetailsLoading: boolean | undefined;
+  setIsMoviesDetailsLoading: Dispatch<SetStateAction<boolean | undefined>>;
 };
 
 type DataProviderProps = {
@@ -41,6 +45,12 @@ function DataProvider({ children }: DataProviderProps) {
     UseGetMoviesByGenreResult | undefined
   >();
   const [isMoviesByGenreLoading, setIsMoviesByGenreLoading] = useState<
+    boolean | undefined
+  >();
+  const [moviesDetails, setMoviesDetails] = useState<
+  UseGetMovieDetailsResult | undefined
+  >();
+  const [isMoviesDetailsLoading, setIsMoviesDetailsLoading] = useState<
     boolean | undefined
   >();
   const [activeGenre, setActiveGenre] = useState<string>("Todos");
@@ -63,6 +73,10 @@ function DataProvider({ children }: DataProviderProps) {
         setMovies,
         activeGenre,
         setActiveGenre,
+        moviesDetails,
+        setMoviesDetails,
+        isMoviesDetailsLoading,
+        setIsMoviesDetailsLoading,
       }}
     >
       {children}
