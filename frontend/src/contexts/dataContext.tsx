@@ -2,36 +2,46 @@ import {
   createContext,
   useContext,
   ReactNode,
-} from 'react';
-import { useData, UseDataResult } from '../hooks/useData';
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { UseGetGenresResult, useGetGenres } from "../hooks/useGetGenres";
+import { UseGetMoviesByGenreResult } from "../hooks/getMoviesByGenre";
 
 type DataState = {
-  users: UseDataResult[];
-  isLoading: boolean;
-}
+  genres: UseGetGenresResult[];
+  isGenresLoading: boolean;
+  moviesByGenre: UseGetMoviesByGenreResult[];
+  setMoviesByGenre: Dispatch<SetStateAction<never[]>>;
+};
 
 type DataProviderProps = {
   children: ReactNode;
-}
+};
 
-const DataContext = createContext<DataState | null>(null)
+const DataContext = createContext<DataState | null>(null);
 
 function DataProvider({ children }: DataProviderProps) {
-  const { users, isLoading } = useData()
+  const [moviesByGenre, setMoviesByGenre] = useState([]);
+  const { genres, isGenresLoading } = useGetGenres();
 
   return (
-    <DataContext.Provider value={{ users, isLoading }}>
+    <DataContext.Provider
+      value={{ genres, isGenresLoading, moviesByGenre, setMoviesByGenre }}
+    >
       {children}
     </DataContext.Provider>
-  )
+  );
 }
 
 function useDataResults() {
-  const context = useContext(DataContext)
+  const context = useContext(DataContext);
 
-  if (!context) throw new Error('Data context must not be used outside its provider')
+  if (!context)
+    throw new Error("Data context must not be used outside its provider");
 
-  return context
+  return context;
 }
 
 export { DataContext, DataProvider, useDataResults };

@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const StyledButton = styled(Link)<{ path: boolean }>`
+type ButtonStyledProps = {
+  $hasPath: boolean;
+  $unclickableButton?: boolean;
+}
+
+export const StyledButton = styled(Link)<ButtonStyledProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,14 +17,16 @@ export const StyledButton = styled(Link)<{ path: boolean }>`
   border: 2px solid #3f3e6d;
   border-radius: 23px;
 
-  cursor: ${({ path }) => path ? 'pointer' : 'default'};
+  cursor: ${({ $hasPath }) => ($hasPath ? "pointer" : "default")};
 
   svg {
     width: 40px;
     height: 40px;
   }
 
-  ${({ path }) => path && `
+  ${({ $hasPath }) =>
+    $hasPath &&
+    `
     &:hover {
       background-color: #fe673780;
   
@@ -29,6 +36,18 @@ export const StyledButton = styled(Link)<{ path: boolean }>`
         }
       }
     }
+  `}
+
+  ${({ $unclickableButton }) =>
+    $unclickableButton &&
+    `
+      background-color: #fe6737;
+  
+      svg {
+        path {
+          fill: #ffffff;
+        }
+      }
   `}
 
   &.active {

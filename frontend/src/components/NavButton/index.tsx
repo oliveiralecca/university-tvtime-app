@@ -13,9 +13,18 @@ export function NavButton({ path, icon, label }: NavButtonProps) {
     if (window.location.pathname === path) return "active";
   }
 
+  function activeUnclickableButton(label: string) {
+    if (
+      (window.location.pathname.includes("genero") && label === "Gênero") ||
+      (window.location.pathname.includes("filme") && label === "Filme")
+    )
+      return true;
+  }
+
   return (
     <S.StyledButton
-      path={!!path}
+      $hasPath={Boolean(path)}
+      $unclickableButton={activeUnclickableButton(label)}
       to={path ?? ""}
       title={label}
       className={`${activeButton() ?? ""}`}

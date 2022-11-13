@@ -20,7 +20,7 @@ class Filme {
 
         if(this.errors.length > 0) return;
 
-        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, capa, generos} = this.body
+        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body
 
         const [horas,minutos] = tempo.split(':');
         const tempoDate = new Date();
@@ -149,14 +149,6 @@ class Filme {
             resumo: (typeof this.body.resumo === 'string')?this.body.resumo:'', 
             titulos_equivalentes: (typeof this.body.titulos_equivalentes === 'string')?this.body.titulos_equivalentes:'',
             generos: (typeof this.body.generos === 'object')?this.body.generos:''}
-    }
-
-    static async removeImage(file) {      
-        if (file) {
-            const filmeFile = ((file).split('/'));
-            const capaPath = path.resolve('public', 'assets', 'images', 'capas', filmeFile[filmeFile.length - 1]);
-            if(fs.existsSync(capaPath)) await fs.promises.unlink(capaPath);
-        }
     }
 
 }

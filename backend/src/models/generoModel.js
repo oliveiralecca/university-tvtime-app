@@ -1,10 +1,13 @@
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
+const path = require('path');
+const fs = require('fs');
 
 const prisma = new PrismaClient();
 
 class Genero {
-    constructor(body){
-        this.body = body;
+    constructor(req){
+        this.req = req
+        this.body = req.body;
         this.errors = [];
         this.genero = null;
     }
@@ -19,12 +22,12 @@ class Genero {
     }
 
     async createGenero(){
-        const {nome, filmes, icone} = this.body;
+        const {nome, filmes} = this.body;
         let filmesInt = filmes?filmes.map(film => Number(film)):[]
         this.genero = await prisma.genero.create({
             data: {
                 nome,
-                icone: icone?icone:undefined,
+                icone: this.req.file?'/assets/images/icones/' + this.req.file.filename:null,
                 video_tem: filmesInt.length > 0?{
                     create: filmesInt.map(film => {
                         return {id_video: film}
@@ -59,13 +62,16 @@ class Genero {
             this.errors.push("Filme não encontrado");
             return
         }
-        const {nome, filmes,icone} = this.body;
+        const {nome, filmes} = this.body;
         let filmesInt = filmes?filmes.map(film => Number(film)):[]
+
+        await Genero.removeImage(genero.icone);
+
         this.genero = await prisma.genero.update({
             where: {id_genero: genero.id_genero},
             data: {
                 nome,
-                icone: icone?icone:undefined,
+                icone: this.req.file?'/assets/images/icones/' + this.req.file.filename:null,
                 video_tem: filmesInt.length > 0?{
                     create: filmesInt.map(film => {
                         return {id_video: film}
@@ -82,6 +88,14 @@ class Genero {
             return;
         }
         await prisma.genero.delete({where: {id_genero: genero.id_genero}});
+    }
+
+    static async removeImage(file) {      
+        if (file) {
+            const filmeFile = ((file).split('/'));
+            const capaPath = path.resolve('public', 'assets', 'images', 'icones', filmeFile[filmeFile.length - 1]);
+            if(fs.existsSync(capaPath)) await fs.promises.unlink(capaPath);
+        }
     }
 
 }

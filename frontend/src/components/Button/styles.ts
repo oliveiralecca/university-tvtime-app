@@ -17,10 +17,10 @@ export const StyledButton = styled(Link)`
   }
 
   &:hover {
-    color: #fe7141;
+    color: #fe6737;
 
     svg {
-      fill: #fe7141;
+      fill: #fe6737;
     }
   }
 `;
