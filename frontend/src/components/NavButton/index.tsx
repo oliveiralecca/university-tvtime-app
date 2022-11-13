@@ -14,10 +14,7 @@ export function NavButton({ path, icon, label }: NavButtonProps) {
   }
 
   function activeUnclickableButton(label: string) {
-    if (
-      (window.location.pathname.includes("genero") && label === "Gênero") ||
-      (window.location.pathname.includes("filme") && label === "Filme")
-    )
+    if (window.location.pathname.includes("filme") && label === "Filme")
       return true;
   }
 

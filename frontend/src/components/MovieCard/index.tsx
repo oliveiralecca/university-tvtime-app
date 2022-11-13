@@ -1,26 +1,20 @@
 import * as S from "./styles";
 
-type CardProps = {
+type MovieCardProps = {
   name: string;
-  age: number;
-  gender: string;
-}
+  poster: string;
+  path: string;
+  onClick: () => void;
+};
 
-export function Card({ name, age, gender }: CardProps) {
+export function MovieCard({ name, poster, path, onClick }: MovieCardProps) {
+
   return (
-    <S.Container>
-      <S.Item>
-        <span>Nome completo</span>
+    <S.Container to={path} onClick={onClick}>
+      <S.Poster src={poster} />
+      <S.Name>
         <p>{name}</p>
-      </S.Item>
-      <S.Item>
-        <span>Idade</span>
-        <p>{age}</p>
-      </S.Item>
-      <S.Item>
-        <span>Sexo</span>
-        <p>{gender.toUpperCase()}</p>
-      </S.Item>
+      </S.Name>
     </S.Container>
-  )
+  );
 }

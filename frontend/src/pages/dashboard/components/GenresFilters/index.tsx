@@ -1,45 +1,69 @@
-import React from "react";
-import { FallingLines } from "react-loader-spinner";
+import React, { useState } from "react";
 import { GenreCard } from "../../../../components/GenreCard";
 import { useDataResults } from "../../../../contexts/dataContext";
 import { genreNameTranslate } from "../../../../utils";
 import api from "../../../../services/api";
 
 import * as S from "./styles";
-import { getMoviesByGenre } from "../../../../hooks/getMoviesByGenre";
+import { UseGetMovies, UseGetMoviesByGenreResult } from "./types";
+import { Loader } from "../../../../components/Loader";
 
 export function GenresFilters() {
-  const { genres, isGenresLoading, setMoviesByGenre, moviesByGenre } =
-    useDataResults();
+  const {
+    genres,
+    isGenresLoading,
+    setMoviesByGenre,
+    setIsMoviesByGenreLoading,
+    setMovies,
+    setIsMoviesLoading,
+    setActiveGenre,
+  } = useDataResults();
 
-  function handleClick(id: number) {
-    console.log(getMoviesByGenre(id));
+  const [active, setActive] = useState<number>(0);
 
-    // console.log(id)
-    // console.log(moviesByGenre);
+  async function handleFetchMoviesByGenre(id: number) {
+    if (id) {
+      setActive(id);
+      setActiveGenre("");
+      setIsMoviesByGenreLoading(true);
+      const response = await api.get<UseGetMoviesByGenreResult>(
+        `/genero/list/${id}`
+      );
+      setMoviesByGenre(response.data);
+      setIsMoviesByGenreLoading(false);
+    }
+  }
+
+  async function handleFetchAllMovies() {
+    setActive(0);
+    setActiveGenre("Todos");
+    const response = await api.get<UseGetMovies>(`/filme/list`);
+    setMovies(response.data);
+    setIsMoviesLoading(false);
   }
 
   return (
     <S.Container>
       {isGenresLoading ? (
-        <S.Loader>
-          <FallingLines
-            color="#fe6737"
-            width="100"
-            height="100"
-            visible={true}
-          />
-        </S.Loader>
+        <Loader />
       ) : (
-        genres?.map((genre) => (
+        <>
           <GenreCard
-            key={genre.id_genero}
-            onClick={() => handleClick(genre.id_genero)}
-            // path={`/genero/${genreNameTranslate(genre.nome)}/detalhes`}
-            name={genreNameTranslate(genre.nome)}
-            icon={`${api.defaults.baseURL}/${genre.icone}`}
+            onClick={handleFetchAllMovies}
+            isActive={active === 0}
+            name="Todos"
+            icon="https://emojipedia-us.s3.amazonaws.com/source/microsoft-teams/337/fire_1f525.png"
           />
-        ))
+          {genres?.map((genre) => (
+            <GenreCard
+              key={genre.id_genero}
+              isActive={active === genre.id_genero}
+              onClick={() => handleFetchMoviesByGenre(genre.id_genero)}
+              name={genreNameTranslate(genre.nome)}
+              icon={`${api.defaults.baseURL}/${genre.icone}`}
+            />
+          ))}
+        </>
       )}
     </S.Container>
   );

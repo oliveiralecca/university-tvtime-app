@@ -5,7 +5,6 @@ import { RegisterForm } from "./pages/form";
 import { AppSkeleton } from "./layouts/AppSkeleton";
 import { Page404 } from "./pages/404";
 import { MovieDetails } from "./pages/movieDetails";
-import { GenresDetails } from "./pages/genresDetails";
 
 export function AppRoutes() {
   return (
@@ -16,8 +15,7 @@ export function AppRoutes() {
           element={<AppSkeleton children={<Dashboard />} title="Dashboard" />}
         />
         <Route path="/" element={<Navigate to="/home" />} />
-        {/* <Route path="/details/:user" element={<Details />} /> */}
-        <Route path="/genero/:genre/detalhes" element={<AppSkeleton children={<GenresDetails />} title="Gênero" />} />
+        <Route path="/filme/:movie/detalhes" element={<AppSkeleton children={<MovieDetails />} title="Filme" />} />
         <Route
           path="/cadastrar"
           element={

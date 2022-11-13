@@ -5,7 +5,8 @@ export const StyledContainer = styled.div`
   gap: 20px;
   padding: 30px;
 
-  height: calc(100% - 60px);
+  height: fit-content;
+  min-height: 100vh;
 
   main {
     flex: 1;

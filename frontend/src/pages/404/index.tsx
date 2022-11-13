@@ -1,8 +1,8 @@
 import React from "react";
+import { Button } from "../../components/Button";
+import { ArrowLeftIcon } from "../../components/Icons";
 
 import * as S from "./styles";
-
-type Page404Props = {};
 
 export function Page404() {
   return (
@@ -11,6 +11,7 @@ export function Page404() {
         <img src="/src/assets/icons/error-404.gif" alt="" />
       </p>
       <a href="https://storyset.com/web">Web illustrations by Storyset</a>
+      <Button path="/home" label="Voltar para o início" icon={<ArrowLeftIcon />} />
     </S.Container>
   );
 }
