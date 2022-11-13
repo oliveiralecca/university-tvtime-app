@@ -27,7 +27,7 @@ export function MovieDetails() {
         </div>
         <div className="description">
           <div className="genero">
-            <h1>A cinco passos de me suicídar</h1>
+            <h1>Titulo do filme aqui</h1>
             <button>Action</button>
             <button>Ficcao</button>
             <button>Adventure</button>
