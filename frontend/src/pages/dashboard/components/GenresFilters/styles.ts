@@ -5,7 +5,3 @@ export const Container = styled.section`
   align-items: center;
   gap: 10px;
 `;
-
-export const Loader = styled.div`
-  height: 100px;
-`;

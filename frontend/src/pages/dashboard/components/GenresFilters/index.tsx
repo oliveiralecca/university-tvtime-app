@@ -6,7 +6,8 @@ import { genreNameTranslate } from "../../../../utils";
 import api from "../../../../services/api";
 
 import * as S from "./styles";
-import { UseGetMoviesByGenreResult } from "../../../../hooks/getMoviesByGenre";
+import { Movie, UseGetMoviesByGenreResult } from "./types";
+import { Loader } from "../../../../components/Loader";
 
 export function GenresFilters() {
   const {
@@ -14,10 +15,13 @@ export function GenresFilters() {
     isGenresLoading,
     setMoviesByGenre,
     setIsMoviesByGenreLoading,
+    setMovies,
+    setIsMoviesLoading
   } = useDataResults();
 
-  function handleClick(id: number) {
+  function handleFetchMoviesByGenre(id: number) {
     if (id) {
+      setIsMoviesByGenreLoading(true);
       return api
         .get<UseGetMoviesByGenreResult[]>(`/genero/list/${id}`)
         .then((response) => {
@@ -27,27 +31,36 @@ export function GenresFilters() {
     }
   }
 
+  function handleFetchAllMovies() {
+    return api
+      .get<Movie[]>(`/filme/list`)
+      .then((response) => {
+        setMovies(response.data);
+        setIsMoviesLoading(false);
+      });
+  }
+
   return (
     <S.Container>
       {isGenresLoading ? (
-        <S.Loader>
-          <FallingLines
-            color="#fe6737"
-            width="100"
-            height="100"
-            visible={true}
-          />
-        </S.Loader>
+        <Loader />
       ) : (
-        genres?.map((genre) => (
+        <>
           <GenreCard
-            key={genre.id_genero}
-            onClick={() => handleClick(genre.id_genero)}
-            // path={`/genero/${genreNameTranslate(genre.nome)}/detalhes`}
-            name={genreNameTranslate(genre.nome)}
-            icon={`${api.defaults.baseURL}/${genre.icone}`}
+            onClick={handleFetchAllMovies}
+            name="Todos"
+            icon="https://emojipedia-us.s3.amazonaws.com/source/microsoft-teams/337/fire_1f525.png"
           />
-        ))
+          {genres?.map((genre) => (
+            <GenreCard
+              key={genre.id_genero}
+              onClick={() => handleFetchMoviesByGenre(genre.id_genero)}
+              // path={`/genero/${genreNameTranslate(genre.nome)}/detalhes`}
+              name={genreNameTranslate(genre.nome)}
+              icon={`${api.defaults.baseURL}/${genre.icone}`}
+            />
+          ))}
+        </>
       )}
     </S.Container>
   );
