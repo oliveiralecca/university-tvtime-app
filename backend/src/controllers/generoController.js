@@ -12,7 +12,7 @@ exports.index = async (req,res) => {
 
 exports.register = async (req,res) => {
     try {
-        const genero = new Genero(req.body);
+        const genero = new Genero(req);
         await genero.createGenero();
         res.json(genero.genero)
     } catch(e) {
@@ -23,7 +23,7 @@ exports.register = async (req,res) => {
 
 exports.list = async (req,res) => {
     try {
-        const genero = new Genero(req.body);
+        const genero = new Genero(req);
         await genero.getGeneros();
         res.json(genero.genero)
     } catch(e) {
@@ -35,7 +35,7 @@ exports.list = async (req,res) => {
 exports.single = async(req,res) => {
     if (!req.params.id_genero) return res.json({errors: "Id não encontrado"})
     try {
-        const genero = new Genero(req.body);
+        const genero = new Genero(req);
         await genero.getGenero(req.params.id_genero);
         const filmes = await Genero.getAllFilmes();
         if (genero.errors.length > 0){
@@ -69,7 +69,7 @@ exports.update = async(req,res) => {
 exports.delete = async (req,res) => {
     if (!req.params.id_genero) return res.json({errors: "Id não encontrado"})
     try {
-        const genero = new Genero(req.body)
+        const genero = new Genero(req)
         await genero.deleteGenero(req.params.id_genero);
         if (genero.errors.length > 0){
             return res.json({errors: genero.errors})
