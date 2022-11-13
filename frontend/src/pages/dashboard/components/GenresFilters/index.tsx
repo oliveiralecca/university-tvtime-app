@@ -18,7 +18,7 @@ export function GenresFilters() {
     setIsMoviesLoading
   } = useDataResults();
 
-  const [active, setActive] = useState<number | null>(null);
+  const [active, setActive] = useState<number>(0);
 
   function handleFetchMoviesByGenre(id: number) {
     if (id) {
