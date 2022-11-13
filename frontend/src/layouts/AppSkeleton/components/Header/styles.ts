@@ -14,7 +14,7 @@ export const Title = styled.div`
 `;
 
 export const Separator = styled.div`
-  border-left: 2px solid #211f4180;
+  border-left: 2px solid #2F2D52; 
   height: 40px;
 `;
 
@@ -25,5 +25,5 @@ export const ProfilePhoto = styled.img`
 
   border-radius: 20px;
 
-  background-color: #fe7141;
+  background-color: #fe6737;
 `;
