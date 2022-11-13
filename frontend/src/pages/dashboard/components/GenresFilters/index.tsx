@@ -5,7 +5,7 @@ import { genreNameTranslate } from "../../../../utils";
 import api from "../../../../services/api";
 
 import * as S from "./styles";
-import { Movie, UseGetMoviesByGenreResult } from "./types";
+import { UseGetMovies, UseGetMoviesByGenreResult } from "./types";
 import { Loader } from "../../../../components/Loader";
 
 export function GenresFilters() {
@@ -15,7 +15,8 @@ export function GenresFilters() {
     setMoviesByGenre,
     setIsMoviesByGenreLoading,
     setMovies,
-    setIsMoviesLoading
+    setIsMoviesLoading,
+    setActiveGenre,
   } = useDataResults();
 
   const [active, setActive] = useState<number>(0);
@@ -23,9 +24,10 @@ export function GenresFilters() {
   function handleFetchMoviesByGenre(id: number) {
     if (id) {
       setActive(id);
+      setActiveGenre("");
       setIsMoviesByGenreLoading(true);
       return api
-        .get<UseGetMoviesByGenreResult[]>(`/genero/list/${id}`)
+        .get<UseGetMoviesByGenreResult>(`/genero/list/${id}`)
         .then((response) => {
           setMoviesByGenre(response.data);
           setIsMoviesByGenreLoading(false);
@@ -35,12 +37,11 @@ export function GenresFilters() {
 
   function handleFetchAllMovies() {
     setActive(0);
-    return api
-      .get<Movie[]>(`/filme/list`)
-      .then((response) => {
-        setMovies(response.data);
-        setIsMoviesLoading(false);
-      });
+    setActiveGenre("Todos");
+    return api.get<UseGetMovies>(`/filme/list`).then((response) => {
+      setMovies(response.data);
+      setIsMoviesLoading(false);
+    });
   }
 
   return (

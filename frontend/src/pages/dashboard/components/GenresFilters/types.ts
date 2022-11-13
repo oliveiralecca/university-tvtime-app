@@ -1,3 +1,5 @@
+import { UseGetGenresResult } from "../../../../hooks/useGetGenres";
+
 export type Movie = {
   id_video: number;
   titulo: string;
@@ -17,3 +19,8 @@ export type UseGetMoviesByGenreResult = {
   icone: string;
   filmes: Movie[];
 };
+
+export type UseGetMovies = {
+  filmes: Movie[];
+  generos: UseGetGenresResult[];
+}
