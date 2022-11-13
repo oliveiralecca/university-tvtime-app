@@ -1,9 +1,15 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
-    text-align: center;
+  height: 100vh;
 
-    a {
-        color: #3F3E6D
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  a:nth-child(2) {
+    display: none;
+  }
 `;

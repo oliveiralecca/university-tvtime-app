@@ -18,7 +18,6 @@ export function NavBar() {
       <S.Navigation>
         <NavButton path="/home" icon={<AllIcon />} label="Home" />
         <NavButton icon={<MovieIcon />} label="Filme" />
-        <NavButton icon={<GenresIcon />} label="Gênero" />
         <NavButton path="/cadastrar" icon={<EditorIcon />} label="Cadastrar" />
       </S.Navigation>
     </S.Container>
