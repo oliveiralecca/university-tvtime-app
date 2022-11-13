@@ -17,11 +17,23 @@ export function MovieDetails() {
     <Container>
       {userDetails && <Card name={userDetails.name} age={userDetails.age} gender={userDetails.gender} />}
       <S.Container>
-        <section className="escopo">
-          <h1>teste</h1>
-        </section>
+       <div className="capa">
+        <div>
+          Capa
+        </div>
+       </div>
+       <div className="description">
+        <div className="genero">
+         <h1>Titulo do FILME</h1>
+        <button>Action</button>
+        <button>Ficcao</button>
+        <button>Adventure</button>
+        <button>Thriller</button>
+        </div>
+       </div>
+       <div className="title-geners">c</div>
       </S.Container>
-      <Button path="/" label="voltar" />
+      
     </Container>
   )
 }
