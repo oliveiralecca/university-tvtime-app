@@ -10,6 +10,7 @@ export const Container = styled.div`
 
   a {
   gap: 15px;
+  }
 
   a:nth-child(2) {
     display: none;
