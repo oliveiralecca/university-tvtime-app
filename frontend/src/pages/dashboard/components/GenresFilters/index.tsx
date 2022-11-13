@@ -1,5 +1,4 @@
-import React from "react";
-import { FallingLines } from "react-loader-spinner";
+import React, { useState } from "react";
 import { GenreCard } from "../../../../components/GenreCard";
 import { useDataResults } from "../../../../contexts/dataContext";
 import { genreNameTranslate } from "../../../../utils";
@@ -19,8 +18,11 @@ export function GenresFilters() {
     setIsMoviesLoading
   } = useDataResults();
 
+  const [active, setActive] = useState<number | null>(null);
+
   function handleFetchMoviesByGenre(id: number) {
     if (id) {
+      setActive(id);
       setIsMoviesByGenreLoading(true);
       return api
         .get<UseGetMoviesByGenreResult[]>(`/genero/list/${id}`)
@@ -32,6 +34,7 @@ export function GenresFilters() {
   }
 
   function handleFetchAllMovies() {
+    setActive(0);
     return api
       .get<Movie[]>(`/filme/list`)
       .then((response) => {
@@ -48,12 +51,14 @@ export function GenresFilters() {
         <>
           <GenreCard
             onClick={handleFetchAllMovies}
+            isActive={active === 0}
             name="Todos"
             icon="https://emojipedia-us.s3.amazonaws.com/source/microsoft-teams/337/fire_1f525.png"
           />
           {genres?.map((genre) => (
             <GenreCard
               key={genre.id_genero}
+              isActive={active === genre.id_genero}
               onClick={() => handleFetchMoviesByGenre(genre.id_genero)}
               // path={`/genero/${genreNameTranslate(genre.nome)}/detalhes`}
               name={genreNameTranslate(genre.nome)}

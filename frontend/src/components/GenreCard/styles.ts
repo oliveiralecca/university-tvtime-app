@@ -20,6 +20,10 @@ export const Container = styled.div`
     background-color: #fe6737;
     cursor: pointer;
   }
+
+  &.active {
+    background-color: #fe6737;
+  }
 `;
 
 export const Icon = styled.img`
