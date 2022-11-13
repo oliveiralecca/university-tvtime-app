@@ -6,17 +6,25 @@ import { genreNameTranslate } from "../../../../utils";
 import api from "../../../../services/api";
 
 import * as S from "./styles";
-import { getMoviesByGenre } from "../../../../hooks/getMoviesByGenre";
+import { UseGetMoviesByGenreResult } from "../../../../hooks/getMoviesByGenre";
 
 export function GenresFilters() {
-  const { genres, isGenresLoading, setMoviesByGenre, moviesByGenre } =
-    useDataResults();
+  const {
+    genres,
+    isGenresLoading,
+    setMoviesByGenre,
+    setIsMoviesByGenreLoading,
+  } = useDataResults();
 
   function handleClick(id: number) {
-    console.log(getMoviesByGenre(id));
-
-    // console.log(id)
-    // console.log(moviesByGenre);
+    if (id) {
+      return api
+        .get<UseGetMoviesByGenreResult[]>(`/genero/list/${id}`)
+        .then((response) => {
+          setMoviesByGenre(response.data);
+          setIsMoviesByGenreLoading(false);
+        });
+    }
   }
 
   return (

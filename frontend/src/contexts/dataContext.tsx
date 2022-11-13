@@ -12,8 +12,10 @@ import { UseGetMoviesByGenreResult } from "../hooks/getMoviesByGenre";
 type DataState = {
   genres: UseGetGenresResult[];
   isGenresLoading: boolean;
-  moviesByGenre: UseGetMoviesByGenreResult[];
-  setMoviesByGenre: Dispatch<SetStateAction<never[]>>;
+  moviesByGenre: UseGetMoviesByGenreResult[] | undefined;
+  setMoviesByGenre: Dispatch<SetStateAction<UseGetMoviesByGenreResult[] | undefined>>;
+  isMoviesByGenreLoading: boolean;
+  setIsMoviesByGenreLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 type DataProviderProps = {
@@ -23,12 +25,13 @@ type DataProviderProps = {
 const DataContext = createContext<DataState | null>(null);
 
 function DataProvider({ children }: DataProviderProps) {
-  const [moviesByGenre, setMoviesByGenre] = useState([]);
+  const [moviesByGenre, setMoviesByGenre] = useState<UseGetMoviesByGenreResult[] | undefined>();
+  const [isMoviesByGenreLoading, setIsMoviesByGenreLoading] = useState(true);
   const { genres, isGenresLoading } = useGetGenres();
 
   return (
     <DataContext.Provider
-      value={{ genres, isGenresLoading, moviesByGenre, setMoviesByGenre }}
+      value={{ genres, isGenresLoading, moviesByGenre, setMoviesByGenre, isMoviesByGenreLoading, setIsMoviesByGenreLoading }}
     >
       {children}
     </DataContext.Provider>
