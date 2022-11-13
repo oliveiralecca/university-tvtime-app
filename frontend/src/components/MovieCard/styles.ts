@@ -1,39 +1,45 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled(Link)`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  width: 200px;
-  padding: 10px;
-  margin-bottom: 16px;
-  gap: 20px;
+  position: relative;
 
-  border: 1px dotted #8257E6;
+  color: #fff;
+  background: #2f2d52;
+
+  border-radius: 30px;
+  height: 320px;
+  width: 220px;
 `;
 
-export const Item = styled.div`
+export const Poster = styled.img`
+  width: 100%;
+  height: 100%;
+
+  border-radius: 30px;
+  margin: -10px;
+
+  &:hover {
+    filter: drop-shadow(5px 5px 20px #f36737);
+  }
+`;
+
+export const Name = styled.div`
+  width: 100%;
+  border-radius: 0 0 30px 30px;
+
+  position: absolute;
+  bottom: 0;
+
+  background: rgba(47, 45, 82, 85%);
+
   p {
-    margin-left: 15px;
-    color: #42D3FF;
     font-size: 14px;
-  }
-
-  span {
-    display: flex;
-    align-items: flex-start;
-    
-    gap: 6px;
-    font-size: 18px;
-    margin-bottom: 4px;
-  }
-
-  span::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 0 8px 8px;
-    border-color: transparent transparent #42D3FF transparent;
+    padding: 25px;
   }
 `;
