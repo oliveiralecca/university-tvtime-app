@@ -1,7 +1,8 @@
-const { PrismaClient } = require('@prisma/client'),
-    fs = require('fs'),
-    path = require('path'),
-    prisma = new PrismaClient();
+const { PrismaClient } = require('@prisma/client');
+const fs = require('fs');
+const path = require('path');
+
+const prisma = new PrismaClient();
 
 class Filme {
     constructor(req){
@@ -12,13 +13,17 @@ class Filme {
     }
     static async getAllGeneros() {
         const generos = await prisma.genero.findMany();
+        await prisma.$disconnect();
         return generos;
     } 
 
     async createFilme() {
         this.validate();
 
-        if(this.errors.length > 0) return;
+        if(this.errors.length > 0) {
+            await prisma.$disconnect();
+            return;
+        }
 
         const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body
 
@@ -49,6 +54,7 @@ class Filme {
             }
         });
         this.filme = {...video, ...filme};
+        await prisma.$disconnect();
     }
 
     async getFilmes() {
@@ -56,13 +62,15 @@ class Filme {
         this.filme = await Promise.all(filmes.map(async film => {
             let video = await prisma.video.findUnique({where: {id_video: film.id_video}});
             return {...video, ...film};
-        }))
+        }));
+        await prisma.$disconnect();
     }
 
     async getFilme(id) {
         const filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
         if (!filme) {
             this.errors.push("Filme não encontrado");
+            await prisma.$disconnect();
             return;
         }
         const video = await prisma.video.findUnique({where: {id_video: filme.id_video}});
@@ -71,18 +79,22 @@ class Filme {
         let generos = video_tem.length>0?await Promise.all(video_tem.map(async relation => {
             return await prisma.genero.findUnique({where: {id_genero: relation.id_genero}})
         })):[]
-        this.filme = {...video,...filme,generos}
+        this.filme = {...video,...filme,generos};
+        await prisma.$disconnect();
     }
 
     async updateFilme(id) {
         let filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
         if (!filme) {
             this.errors.push("Filme não encontrado");
+            await prisma.$disconnect();
             return;
         }
         this.validate();
-        if(this.errors.length>0) return;
-
+        if(this.errors.length>0) {
+            await prisma.$disconnect();
+            return;
+        }
 
         const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body
 
@@ -119,16 +131,27 @@ class Filme {
         });
         
         this.filme = {...video, ...filme};
+        await prisma.$disconnect();
     }
 
     async deleteFilme(id) {
         const filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
         if (!filme) {
             this.errors.push("Filme não encontrado");
+            await prisma.$disconnect();
             return;
         }
         await prisma.video.delete({where: {id_video: filme.id_video}});
+        await prisma.$disconnect();
     }
+
+    static async removeImage(file) {      
+        if (file) {
+            const filmeFile = ((file).split('/'));
+            const capaPath = path.resolve('public', 'assets', 'images', 'capas', filmeFile[filmeFile.length - 1]);
+            if(fs.existsSync(capaPath)) await fs.promises.unlink(capaPath);
+        }
+    };
 
     validate() {
         this.cleanUp();
@@ -148,7 +171,8 @@ class Filme {
             data_de_estreia: (typeof this.body.data_de_estreia === 'string')?this.body.data_de_estreia:'', 
             resumo: (typeof this.body.resumo === 'string')?this.body.resumo:'', 
             titulos_equivalentes: (typeof this.body.titulos_equivalentes === 'string')?this.body.titulos_equivalentes:'',
-            generos: (typeof this.body.generos === 'object')?this.body.generos:''}
+            generos: (typeof this.body.generos === 'object')?this.body.generos:''
+        }
     }
 
 }

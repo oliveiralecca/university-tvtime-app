@@ -17,24 +17,26 @@ class Genero {
         let filmesVideos = await Promise.all(filmes.map(async filme => {
             const video = await prisma.video.findUnique({where: {id_video: filme.id_video}})
             return {...video, ...filme};
-        }))
+        }));
+        await prisma.$disconnect();
         return filmesVideos;
     }
 
     async createGenero(){
         const {nome, filmes} = this.body;
-        let filmesInt = filmes?filmes.map(film => Number(film)):[]
+        let filmesInt = filmes?filmes.map(film => Number(film)):[];
         this.genero = await prisma.genero.create({
             data: {
                 nome,
                 icone: this.req.file?'/assets/images/icones/' + this.req.file.filename:null,
                 video_tem: filmesInt.length > 0?{
                     create: filmesInt.map(film => {
-                        return {id_video: film}
+                        return {id_video: film};
                     }),
                 }:undefined,
             },
-        })
+        });
+        await prisma.$disconnect();
     }
 
     async getGeneros() {
@@ -45,7 +47,8 @@ class Genero {
         const genero = await prisma.genero.findUnique({where: {id_genero: Number(id)}});
         if (!genero) {
             this.errors.push("Filme não encontrado");
-            return
+            await prisma.$disconnect();
+            return;
         }
         const video_tem = await prisma.video_tem.findMany({where: {id_genero: genero.id_genero}});
         let filmes = await Promise.all(video_tem.map(async gen => {
@@ -53,17 +56,19 @@ class Genero {
             const filme = await prisma.filme.findUnique({where: {id_video: video.id_video}});
             return {...video,...filme};
         }));
-        this.genero = {...genero,filmes}
+        this.genero = {...genero,filmes};
+        await prisma.$disconnect();
     }
 
     async updateGenero(id){
         const genero = await prisma.genero.findUnique({where: {id_genero: Number(id)}});
         if (!genero) {
             this.errors.push("Filme não encontrado");
+            await prisma.$disconnect();
             return
         }
         const {nome, filmes} = this.body;
-        let filmesInt = filmes?filmes.map(film => Number(film)):[]
+        let filmesInt = filmes?filmes.map(film => Number(film)):[];
 
         await Genero.removeImage(genero.icone);
 
@@ -74,20 +79,23 @@ class Genero {
                 icone: this.req.file?'/assets/images/icones/' + this.req.file.filename:null,
                 video_tem: filmesInt.length > 0?{
                     create: filmesInt.map(film => {
-                        return {id_video: film}
+                        return {id_video: film};
                     }),
                 }:undefined,
             },
-        })
+        });
+        await prisma.$disconnect();
     }
 
     async deleteGenero(id) {
         const genero = await prisma.genero.findUnique({where: {id_genero: Number(id)}});
         if (!genero) {
             this.errors.push("Genero não encontrado");
+            await prisma.$disconnect();
             return;
         }
         await prisma.genero.delete({where: {id_genero: genero.id_genero}});
+        await prisma.$disconnect();
     }
 
     static async removeImage(file) {      
@@ -96,7 +104,7 @@ class Genero {
             const capaPath = path.resolve('public', 'assets', 'images', 'icones', filmeFile[filmeFile.length - 1]);
             if(fs.existsSync(capaPath)) await fs.promises.unlink(capaPath);
         }
-    }
+    };
 
 }
 
