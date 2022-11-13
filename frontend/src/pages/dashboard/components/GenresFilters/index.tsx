@@ -21,27 +21,25 @@ export function GenresFilters() {
 
   const [active, setActive] = useState<number>(0);
 
-  function handleFetchMoviesByGenre(id: number) {
+  async function handleFetchMoviesByGenre(id: number) {
     if (id) {
       setActive(id);
       setActiveGenre("");
       setIsMoviesByGenreLoading(true);
-      return api
-        .get<UseGetMoviesByGenreResult>(`/genero/list/${id}`)
-        .then((response) => {
-          setMoviesByGenre(response.data);
-          setIsMoviesByGenreLoading(false);
-        });
+      const response = await api.get<UseGetMoviesByGenreResult>(
+        `/genero/list/${id}`
+      );
+      setMoviesByGenre(response.data);
+      setIsMoviesByGenreLoading(false);
     }
   }
 
-  function handleFetchAllMovies() {
+  async function handleFetchAllMovies() {
     setActive(0);
     setActiveGenre("Todos");
-    return api.get<UseGetMovies>(`/filme/list`).then((response) => {
-      setMovies(response.data);
-      setIsMoviesLoading(false);
-    });
+    const response = await api.get<UseGetMovies>(`/filme/list`);
+    setMovies(response.data);
+    setIsMoviesLoading(false);
   }
 
   return (
@@ -61,7 +59,6 @@ export function GenresFilters() {
               key={genre.id_genero}
               isActive={active === genre.id_genero}
               onClick={() => handleFetchMoviesByGenre(genre.id_genero)}
-              // path={`/genero/${genreNameTranslate(genre.nome)}/detalhes`}
               name={genreNameTranslate(genre.nome)}
               icon={`${api.defaults.baseURL}/${genre.icone}`}
             />
