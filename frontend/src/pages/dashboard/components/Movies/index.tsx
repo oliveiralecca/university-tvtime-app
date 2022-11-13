@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { FallingLines } from "react-loader-spinner";
 import { EmptyState } from "../../../../components/EmptyState";
 import { Loader } from "../../../../components/Loader";
+import { MovieCard } from "../../../../components/MovieCard";
 import { useDataResults } from "../../../../contexts/dataContext";
 
 import * as S from "./styles";
@@ -23,17 +24,19 @@ export function Movies() {
 
   moviesResults = activeGenre === "Todos" ? movies : moviesByGenre;
 
-  // console.log(moviesByGenre?.filmes.map(filme => filme.id)); => pego o id e passo para o componente de filme para fazer requisição desse filme específico
-
   return (
     <S.Container>
       {isMoviesLoading || isMoviesByGenreLoading ? (
         <Loader />
       ) : (
         (moviesResults?.filmes.length &&
-          moviesResults.filmes.map((filme) => <li>{filme.titulo}</li>)) || (
-          <EmptyState />
-        )
+          moviesResults.filmes.map((filme) => (
+            <MovieCard
+              name={filme.titulo}
+              poster="https://posters.movieposterdb.com/13_02/2001/241527/l_241527_da927a3d.jpg"
+              path={`/filme/${filme.id_filme}/${filme.titulo}/detalhes`}
+            />
+          ))) || <EmptyState />
       )}
     </S.Container>
   );
