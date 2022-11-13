@@ -26,7 +26,7 @@ exports.register = async(req,res) => {
 
 exports.list = async(req,res) => {
     try {
-        const filme = new Filme(req.body);
+        const filme = new Filme(req);
     
         await filme.getFilmes();
         const generos = await Filme.getAllGeneros();
@@ -39,7 +39,7 @@ exports.list = async(req,res) => {
 exports.single = async(req,res) => {
     if (!req.params.id_filme) return res.status(400).send({errors: ["Id não encontrado"]});
     try {
-        const filme = new Filme(req.body);
+        const filme = new Filme(req);
         await filme.getFilme(req.params.id_filme);
         if (filme.errors.length > 0){
             return res.status(400).send({errors: filme.errors});
@@ -75,7 +75,7 @@ exports.update = async(req,res) => {
 exports.delete = async (req,res) => {
     if (!req.params.id_filme) return res.json({errors: ["Id não encontrado"]})
     try {
-        const filme = new Filme(req.body)
+        const filme = new Filme(req)
         await filme.deleteFilme(req.params.id_filme);
         if (filme.errors.length > 0){
             return res.json({errors: filme.errors})
