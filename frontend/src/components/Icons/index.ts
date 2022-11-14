@@ -5,6 +5,7 @@ import { ReactComponent as GenresIcon } from "../../assets/icons/ghost.svg";
 import { ReactComponent as MovieIcon } from "../../assets/icons/movie.svg";
 import { ReactComponent as NoResultIcon } from "../../assets/icons/magnifying-glass.svg";
 import { ReactComponent as TvIcon } from "../../assets/icons/tv.svg";
+import { ReactComponent as About} from "../../assets/icons/about-icon.svg";
 
 export {
   AllIcon,
@@ -14,4 +15,5 @@ export {
   MovieIcon,
   NoResultIcon,
   TvIcon,
+  About
 };

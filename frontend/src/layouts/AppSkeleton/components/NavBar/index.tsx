@@ -4,6 +4,7 @@ import {
   GenresIcon,
   MovieIcon,
   TvIcon,
+  About
 } from "../../../../components/Icons";
 import { NavButton } from "../../../../components/NavButton";
 import * as S from "./styles";
@@ -19,6 +20,8 @@ export function NavBar() {
         <NavButton path="/home" icon={<AllIcon />} label="Home" />
         <NavButton icon={<MovieIcon />} label="Filme" />
         <NavButton path="/cadastrar" icon={<EditorIcon />} label="Cadastrar" />
+        <NavButton path="/sobre" icon={<About />} label="Sobre" />
+        
       </S.Navigation>
     </S.Container>
   );
