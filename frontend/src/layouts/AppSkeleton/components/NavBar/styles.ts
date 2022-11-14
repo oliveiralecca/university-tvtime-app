@@ -5,6 +5,8 @@ export const Container = styled.aside`
   margin: -30px 0 -30px -30px;
 
   width: 70px;
+  height: 100%;
+  position: fixed;
 
   background: #211f41;
 `;
