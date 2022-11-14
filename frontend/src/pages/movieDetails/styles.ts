@@ -73,10 +73,6 @@ export const Container = styled.div`
     padding-top: 10px;
     
   }
-
-  button:hover {
-    background-color: #FE6737;
-  }
  
 
   .genero > .edit {
