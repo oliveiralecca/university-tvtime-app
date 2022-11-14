@@ -29,7 +29,7 @@ class Filme {
 
         const [horas,minutos] = tempo.split(':');
         const tempoDate = new Date();
-        let titulosEquivalentesArray = titulos_equivalentes?titulos_equivalentes.split(',').map(tit => tit.trim()):undefined;
+        let titulosEquivalentesArray = titulos_equivalentes?titulos_equivalentes.split(',').map(tit => tit.trim()):[];
         tempoDate.setUTCHours(Number(horas),Number(minutos));
         let generosInt = generos?generos.map(gen => Number(gen)):[];
 
@@ -85,6 +85,7 @@ class Filme {
 
     async updateFilme(id) {
         let filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
+        
         if (!filme) {
             this.errors.push("Filme não encontrado");
             await prisma.$disconnect();
@@ -96,15 +97,18 @@ class Filme {
             return;
         }
 
-        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body
+        const video_tem = await prisma.video_tem.findMany({where: {id_video: filme.id_video}});
 
+        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body;
 
 
         const [horas,minutos] = tempo.split(':');
         const tempoDate = new Date();
-        let titulosEquivalentesArray = titulos_equivalentes?titulos_equivalentes.split(',').map(tit => tit.trim()):undefined;
+        let titulosEquivalentesArray = titulos_equivalentes?titulos_equivalentes.split(',').map(tit => tit.trim()):[];
         tempoDate.setUTCHours(Number(horas),Number(minutos));
         let generosInt = generos?generos.map(gen => Number(gen)):[];
+        
+        
   
         await Filme.removeImage(filme.capa);
 
@@ -122,11 +126,14 @@ class Filme {
                 tempo: tempoDate,
                 data_de_estreia: new Date(data_de_estreia),
                 resumo: resumo,
-                video_tem: generosInt.length>0?{
+                video_tem: {
+                    delete: video_tem.map(vidGen => {
+                        return {id_genero_id_video: {id_genero: vidGen.id_genero, id_video: vidGen.id_video}}
+                    }),
                     create: generosInt.map(gen => {
                         return {id_genero: gen};
                     }),
-                }:undefined,
+                },
             }
         });
         
