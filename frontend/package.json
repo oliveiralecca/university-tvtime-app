@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.3.3",
     "react-router-dom": "^6.3.0",
+    "react-toastify": "^9.1.1",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

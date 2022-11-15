@@ -10,4 +10,8 @@ export const Data = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
+
+  .empty {
+    margin-top: 250px;
+  }
 `;
