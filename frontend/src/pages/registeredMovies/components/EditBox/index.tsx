@@ -5,26 +5,29 @@ import * as S from "./styles";
 
 type EditBoxProps = {
   title: string;
-  onDelete: (id: number) => void;
+  editPath: string;
+  onDelete: () => void;
+  onEdit: () => void;
 };
 
-export function EditBox({ title, onDelete }: EditBoxProps) {
+export function EditBox({ title, onDelete, onEdit, editPath }: EditBoxProps) {
   return (
     <S.Container>
       <S.Title>{title}</S.Title>
       <S.Actions>
-        <S.Action
+        <S.Edit
           title="Editar"
-          onClick={() => console.log("function de editar")}
+          to={editPath}
+          onClick={onEdit}
         >
           <EditIcon />
-        </S.Action>
-        <S.Action
+        </S.Edit>
+        <S.Delete
           title="Excluir"
-          onClick={() => onDelete}
+          onClick={onDelete}
         >
           <TrashIcon />
-        </S.Action>
+        </S.Delete>
       </S.Actions>
     </S.Container>
   );

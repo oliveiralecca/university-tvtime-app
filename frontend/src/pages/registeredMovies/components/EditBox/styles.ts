@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -36,21 +37,9 @@ export const Actions = styled.div`
     width: 16px;
     height: 16px;
   }
-
-  div:first-child {
-    svg {
-      fill: #fff;
-    }
-  }
-
-  div:last-child {
-    svg {
-      fill: red;
-    }
-  }
 `;
 
-export const Action = styled.div`
+export const Edit = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,6 +49,31 @@ export const Action = styled.div`
 
   padding: 5px;
   border-radius: 8px;
+
+  svg {
+    fill: #fff;
+  }
+
+  &:hover {
+    background: #fe673780;
+    cursor: pointer;
+  }
+`;
+
+export const Delete = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+
+  padding: 5px;
+  border-radius: 8px;
+
+  svg {
+    fill: red;
+  }
 
   &:hover {
     background: #fe673780;
