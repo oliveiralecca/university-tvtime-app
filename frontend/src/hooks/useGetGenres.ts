@@ -12,7 +12,7 @@ export function useGetGenres() {
   const [isGenresLoading, setIsGenresLoading] = useState(true);
 
   useEffect(() => {
-    api.get<UseGetGenresResult[]>("/filme/index").then((response) => {
+    api.get<UseGetGenresResult[]>("/genero/list").then((response) => {
       setGenres(response.data);
       setIsGenresLoading(false);
     });
