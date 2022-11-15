@@ -1,11 +1,15 @@
-import React from 'react';
-import { NoResultIcon } from '../Icons';
+import React from "react";
+import { NoResultIcon } from "../Icons";
 
-import * as S from './styles';
+import * as S from "./styles";
 
-export function EmptyState() {
+type EmptyStateProps = {
+  className?: string;
+};
+
+export function EmptyState({ className }: EmptyStateProps) {
   return (
-    <S.Container>
+    <S.Container className={className}>
       <NoResultIcon />
       <p>Nenhum resultado encontrado</p>
     </S.Container>

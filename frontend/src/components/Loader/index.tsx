@@ -7,7 +7,7 @@ type LoaderProps = {
   center?: boolean;
 };
 
-export function Loader({center}: LoaderProps) {
+export function Loader({ center }: LoaderProps) {
   return (
     <S.Container center={center}>
       <FallingLines color="#fe6737" width="100" height="100" visible={true} />
