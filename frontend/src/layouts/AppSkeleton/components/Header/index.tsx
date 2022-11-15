@@ -6,6 +6,10 @@ type HeaderProps = {
   title: string;
 };
 
+function goBack() {
+  window.history.back();
+}
+
 export function Header({ title }: HeaderProps) {
   return (
     <S.Container>
@@ -14,7 +18,7 @@ export function Header({ title }: HeaderProps) {
         {title !== "Dashboard" && (
           <>
             <S.Separator />
-            <Button path="/home" label="Voltar" leftIcon icon={<ArrowLeftIcon />} />
+            <Button path="" onClick={goBack} label="Voltar" leftIcon icon={<ArrowLeftIcon />} />
           </>
         )}
       </S.Title>

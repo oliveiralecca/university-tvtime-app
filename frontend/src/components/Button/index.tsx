@@ -7,11 +7,12 @@ type ButtonProps = {
   icon?: ReactNode;
   leftIcon?: boolean;
   rightIcon?: boolean;
+  onClick?: () => void;
 };
 
-export function Button({ path, label, icon, leftIcon, rightIcon }: ButtonProps) {
+export function Button({ path, label, icon, leftIcon, rightIcon, onClick }: ButtonProps) {
   return (
-    <S.StyledButton to={path}>
+    <S.StyledButton to={path} onClick={onClick}>
       {leftIcon && icon && icon}
       {label}
       {rightIcon && icon && icon}
