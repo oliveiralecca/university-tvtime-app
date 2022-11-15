@@ -22,6 +22,7 @@ export const StyledButton = styled.button`
 
   &:hover {
     color: #fe6737;
+    cursor: pointer;
 
     svg {
       fill: #fe6737;
