@@ -31,6 +31,7 @@ export const Poster = styled.img`
 
 export const Name = styled.div`
   width: 100%;
+  min-height: 92px;
   border-radius: 0 0 30px 30px;
 
   position: absolute;
