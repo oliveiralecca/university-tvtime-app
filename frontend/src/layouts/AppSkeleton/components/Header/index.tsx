@@ -14,7 +14,7 @@ export function Header({ title }: HeaderProps) {
         {title !== "Dashboard" && (
           <>
             <S.Separator />
-            <Button path="/home" label="Voltar" icon={<ArrowLeftIcon />} />
+            <Button path="/home" label="Voltar" leftIcon icon={<ArrowLeftIcon />} />
           </>
         )}
       </S.Title>

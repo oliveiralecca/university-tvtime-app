@@ -11,7 +11,7 @@ export function Page404() {
         <img src="/src/assets/icons/error-404.gif" alt="" />
       </p>
       <a href="https://storyset.com/web">Web illustrations by Storyset</a>
-      <Button path="/home" label="Voltar para o início" icon={<ArrowLeftIcon />} />
+      <Button path="/home" label="Voltar para o início" leftIcon icon={<ArrowLeftIcon />} />
     </S.Container>
   );
 }
