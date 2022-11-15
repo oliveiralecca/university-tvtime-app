@@ -39,11 +39,11 @@ class Filme {
                 tempo: tempoDate,
                 data_de_estreia: new Date(data_de_estreia),
                 resumo: resumo,
-                video_tem: generosInt.length>0?{
+                video_tem: {
                     create: generosInt.map(gen => {
                         return {id_genero: gen};
                     }),
-                }:undefined,
+                },
             }
         });
         const filme = await prisma.filme.create({
@@ -148,6 +148,7 @@ class Filme {
             await prisma.$disconnect();
             return;
         }
+        await Filme.removeImage(filme.capa);
         await prisma.video.delete({where: {id_video: filme.id_video}});
         await prisma.$disconnect();
     }
@@ -178,7 +179,8 @@ class Filme {
             data_de_estreia: (typeof this.body.data_de_estreia === 'string')?this.body.data_de_estreia:'', 
             resumo: (typeof this.body.resumo === 'string')?this.body.resumo:'', 
             titulos_equivalentes: (typeof this.body.titulos_equivalentes === 'string')?this.body.titulos_equivalentes:'',
-            generos: (typeof this.body.generos === 'object')?this.body.generos:''
+            generos: (typeof this.body.generos === 'object')?this.body.generos:'',
+            capa: this.body.capa,
         }
     }
 

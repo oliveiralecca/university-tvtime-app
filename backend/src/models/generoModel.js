@@ -94,6 +94,7 @@ class Genero {
             await prisma.$disconnect();
             return;
         }
+        await Genero.removeImage(genero.icone);
         await prisma.genero.delete({where: {id_genero: genero.id_genero}});
         await prisma.$disconnect();
     }
