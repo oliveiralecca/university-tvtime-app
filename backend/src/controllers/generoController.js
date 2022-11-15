@@ -1,15 +1,5 @@
 const Genero = require('../models/generoModel');
 
-exports.index = async (req,res) => {
-    try {  
-        const filmes = await Genero.getAllFilmes();
-        res.json(filmes);
-    } catch(e) {
-        console.log(e);
-        res.json({errors: "Erro na busca por genêros"})
-    }
-}
-
 exports.register = async (req,res) => {
     try {
         const genero = new Genero(req);
@@ -37,7 +27,6 @@ exports.single = async(req,res) => {
     try {
         const genero = new Genero(req);
         await genero.getGenero(req.params.id_genero);
-        const filmes = await Genero.getAllFilmes();
         if (genero.errors.length > 0){
             return res.json({errors: genero.errors});
         }

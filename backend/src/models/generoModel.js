@@ -12,16 +12,6 @@ class Genero {
         this.genero = null;
     }
 
-    static async getAllFilmes(){
-        const filmes = await prisma.filme.findMany();
-        let filmesVideos = await Promise.all(filmes.map(async filme => {
-            const video = await prisma.video.findUnique({where: {id_video: filme.id_video}})
-            return {...video, ...filme};
-        }));
-        await prisma.$disconnect();
-        return filmesVideos;
-    }
-
     async createGenero(){
         const {nome, filmes} = this.body;
         let filmesInt = filmes?filmes.map(film => Number(film)):[];
