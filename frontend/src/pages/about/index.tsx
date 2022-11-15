@@ -8,7 +8,7 @@ export function About() {
           <a href="https://github.com/oliveiralecca" target="_blank">
             <img src="https://avatars.githubusercontent.com/u/65191407?v=4" alt="" />
             <p>
-              Léticia Caroline
+              Letícia Oliveira
               <br />
               <img className="github" src="/src/assets/icons/github-icon.png" alt="" />
             </p>
@@ -35,7 +35,7 @@ export function About() {
       </div>
 
       <div>
-        <p>Professor: André Brito</p>
+        <p>Professor: André Britto</p>
       </div>
     </S.Body>
   );
