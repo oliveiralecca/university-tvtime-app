@@ -3,6 +3,8 @@ import { Loader } from "../../components/Loader";
 import { useDataResults } from "../../contexts/dataContext";
 import * as S from "./styles";
 
+
+
 export function MovieDetails() {
   const { moviesDetails, isMoviesDetailsLoading } = useDataResults();
 
@@ -19,7 +21,10 @@ export function MovieDetails() {
         </div>
         <div className="description">
           <div className="genero">
-            <h1>Titulo do filme aqui</h1>
+            <h1>{isMoviesDetailsLoading ? (
+              <Loader/>
+            ): (<p>{JSON.parse(JSON.stringify(moviesDetails?.titulo))}</p>)}
+            </h1>
             <button>Action</button>
             <button>Ficcao</button>
             <button>Adventure</button>
