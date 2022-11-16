@@ -2,7 +2,7 @@ import * as S from "./styles";
 export function About() {
   return (
     <S.Body>
-      <h1>Projeto da discplina Banco de Dados 2022.1</h1>
+      <h1>Projeto da disciplina Banco de Dados 2022.1</h1>
       <div className="members">
         <button>
           <a href="https://github.com/oliveiralecca" target="_blank">
