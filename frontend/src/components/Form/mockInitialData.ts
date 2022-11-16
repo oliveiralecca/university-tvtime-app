@@ -1,11 +1,11 @@
 export const initialData = {
-  titulo: "",
-  tempo: "", //00:00
-  data_de_estreia: "",
-  resumo: "",
-  titulos_equivalentes: "",
-  capa: "",
-  generos: [], //numbers
+  titulo: "", // input text
+  tempo: "", // 00:00 => input time
+  data_de_estreia: "", // input datetime-local
+  resumo: "", // textarea
+  titulos_equivalentes: "", // pensar nesse
+  capa: "", // input image
+  generos: [], // numbers => input checkbox
 };
 
 // exemplo de envio
@@ -18,7 +18,6 @@ export const initialData = {
 // }
 
 // get /filme/index (formulário de cadastro)
-
 // {
 //     id_genero:Int,
 //     nome:tiposgenero,
@@ -26,12 +25,11 @@ export const initialData = {
 // }[]
 
 // post /filme/register
-
 // {
 //     titulo: String (max:45), (required)
 //     tempo: 00:00, (required)
 //     data_de_estreia: Date (retorno do input datetime-local), (required)
-//     resumo: String (max:300),
+//     resumo: String (max:300), (required)
 //     titulos_equivalentes: String -> "titulo 1,titulo 2" (estou tratando espaços extras),
 //     capa: string,
 //     generos: [] (retorno de checkboxes)
