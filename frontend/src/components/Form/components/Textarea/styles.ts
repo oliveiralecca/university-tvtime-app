@@ -23,7 +23,6 @@ export const Textarea = styled.textarea`
 
   label {
     display: block;
-    font-weight: bold;
     margin-bottom: 10px;
   }
 

@@ -1,0 +1,25 @@
+import styled from "styled-components";
+
+export const Container = styled.div`
+  width: 400px;
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+`;
+
+export const ChecksContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: space-between;
+`;
+
+export const Label = styled.label`
+  font-size: 16px;
+
+  input {
+    margin-right: 5px;
+  }
+`;

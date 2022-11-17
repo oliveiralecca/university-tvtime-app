@@ -21,7 +21,6 @@ export const Input = styled.input`
 
   label {
     display: block;
-    font-weight: bold;
     margin-bottom: 10px;
   }
 

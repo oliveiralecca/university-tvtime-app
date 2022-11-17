@@ -12,3 +12,17 @@ export function genreNameTranslate(genreName: string) {
   if (genreName === "Thriller") return "Suspense";
   return "";
 }
+
+export const genres = [
+  { value: 1, label: 'Ação' },
+  { value: 2, label: 'Aventura' },
+  { value: 3, label: 'Comédia' },
+  { value: 4, label: 'Drama' },
+  { value: 5, label: 'Fantasia' },
+  { value: 6, label: 'Terror' },
+  { value: 7, label: 'Mistério' },
+  { value: 8, label: 'Romance' },
+  { value: 9, label: 'Ficção' },
+  { value: 10, label: 'Sobrenatural' },
+  { value: 11, label: 'Suspense' },
+]

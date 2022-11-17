@@ -1,14 +1,15 @@
 import { useEffect, useRef } from "react";
 import * as Yup from "yup";
-import { Form } from "@unform/web";
 import { Input } from "./components/Input";
 import { Button } from "./components/Button";
-import { ArrowRightIcon, CancelIcon } from "../Icons";
+import { ArrowRightIcon } from "../Icons";
 import { FormHandles, SubmitHandler } from "@unform/core";
 import * as S from "./styles";
 import { Textarea } from "./components/Textarea";
 import api from "../../services/api";
 import ImageInput from "./components/ImageInput";
+import { Checkbox } from "./components/Checkbox";
+import { genres } from "../../utils";
 
 type FormData = {
   titulo: string;
@@ -48,7 +49,7 @@ export function FormModel() {
 
       formRef?.current?.setErrors({});
       reset();
-      // window.location.replace('/home');
+      window.location.replace('/home');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
@@ -108,6 +109,8 @@ export function FormModel() {
       /> */}
 
       <ImageInput name="capa" label="Capa" />
+
+      <Checkbox name="generos" options={genres} />
 
       <S.Buttons>
         <Button
