@@ -14,7 +14,9 @@ export function Movies() {
     isMoviesByGenreLoading,
     movies,
     isMoviesLoading,
+    setIsMoviesLoading,
     activeGenre,
+    setActiveGenre,
     setIsMoviesDetailsLoading,
     setMoviesDetails,
   } = useDataResults();
@@ -22,7 +24,7 @@ export function Movies() {
   let moviesResults;
 
   useEffect(() => {
-    moviesResults = movies;
+    setActiveGenre("Todos");
   }, []);
 
   moviesResults = activeGenre === "Todos" ? movies : moviesByGenre;
@@ -49,7 +51,11 @@ export function Movies() {
               key={`${filme.id_filme}-${idx}`}
               onClick={() => handleFetchMovieDetails(filme.id_filme)}
               name={filme.titulo}
-              poster={filme.capa ? `${api.defaults.baseURL}/${filme.capa}` : '/src/assets/icons/no-photo.gif'}
+              poster={
+                filme.capa
+                  ? `${api.defaults.baseURL}/${filme.capa}`
+                  : "/src/assets/icons/no-photo.gif"
+              }
               path={`/filme/${filme.titulo}/detalhes`}
             />
           ))) || <EmptyState />
