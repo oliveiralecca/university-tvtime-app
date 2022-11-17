@@ -7,11 +7,17 @@ import { ArrowRightIcon } from "../../components/Icons";
 import { Loader } from "../../components/Loader";
 import { useDataResults } from "../../contexts/dataContext";
 import api from "../../services/api";
+import { UseGetMovieDetailsResult } from "../dashboard/components/Movies/types";
 import { EditBox } from "./components/EditBox";
 import * as S from "./styles";
 
 export function RegisteredMovies() {
-  const { movies, isMoviesLoading } = useDataResults();
+  const {
+    movies,
+    isMoviesLoading,
+    setIsMoviesDetailsLoading,
+    setMoviesDetails,
+  } = useDataResults();
 
   const notifySuccess = (msg: string) =>
     toast.success(msg, { autoClose: 3000 });
@@ -30,8 +36,15 @@ export function RegisteredMovies() {
     }, 3000);
   }
 
-  function onEdit() {
-    console.log('editando...')
+  async function onEdit(id: number) {
+    if (id) {
+      setIsMoviesDetailsLoading(true);
+      const response = await api.get<UseGetMovieDetailsResult>(
+        `/filme/list/${id}`
+      );
+      setMoviesDetails(response.data);
+      setIsMoviesDetailsLoading(false);
+    }
   }
 
   return (
@@ -57,7 +70,7 @@ export function RegisteredMovies() {
                   key={movie.id_filme}
                   title={movie.titulo}
                   onDelete={() => onDelete(movie.id_filme)}
-                  onEdit={() => onEdit}
+                  onEdit={() => onEdit(movie.id_filme)}
                   editPath={`/filme/${movie.titulo}/editar`}
                 />
               ))
