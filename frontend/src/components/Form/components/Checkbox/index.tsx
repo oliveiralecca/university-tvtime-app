@@ -46,7 +46,7 @@ export function Checkbox({ name, options, ...rest }: InputProps) {
         {options.map((option, index) => (
           <S.Label htmlFor={option.label} key={option.label}>
             <input
-              defaultChecked={defaultValue.includes(option.label)}
+              defaultChecked={defaultValue.includes(option.value)}
               ref={(ref) => ref && (inputRefs.current[index] = ref)}
               value={option.value}
               type="checkbox"

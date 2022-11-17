@@ -5,7 +5,6 @@ export const Container = styled.div`
 
   label {
     display: block;
-    margin-bottom: 10px;
   }
 `;
 
