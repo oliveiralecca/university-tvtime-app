@@ -15,13 +15,19 @@ type FormData = {
   titulo: string;
   tempo: string;
   data_de_estreia: string;
-  resumo: string;
-  titulos_equivalentes: string;
-  capa: string;
-  generos: number[];
+  resumo?: string;
+  titulos_equivalentes?: string;
+  capa?: string | null;
+  generos?: number[];
 };
 
-export function FormModel() {
+type FormProps = {
+  action: "create" | "update";
+  movieData?: FormData;
+  movieId?: number;
+};
+
+export function FormModel({ action, movieData, movieId }: FormProps) {
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
@@ -44,12 +50,13 @@ export function FormModel() {
         abortEarly: false,
       });
 
-      console.log(data);
-      api.post("/filme/register", data); // chamada pra api => enviar dados
+      // console.log(data);
+      if (action === "create") api.post("/filme/register", data);
+      if (action === "update") api.put(`/filme/update/${movieId}`, data);
 
       formRef?.current?.setErrors({});
       reset();
-      window.location.replace('/home');
+      window.location.replace("/home");
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
@@ -64,14 +71,9 @@ export function FormModel() {
     }
   };
 
-  // simulando retorno de dados da api para form de edição
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     formRef?.current?.setData({
-  //       titulo: 'A Era do Gelo'
-  //     })
-  //   }, 2000)
-  // }, [])
+  useEffect(() => {
+    movieData && formRef?.current?.setData(movieData);
+  }, []);
 
   return (
     <S.FormContainer
@@ -101,6 +103,8 @@ export function FormModel() {
         rows={2}
       />
 
+      <Checkbox name="generos" options={genres} />
+
       {/* <Input
         name="capa"
         label="Capa"
@@ -109,8 +113,6 @@ export function FormModel() {
       /> */}
 
       <ImageInput name="capa" label="Capa" />
-
-      <Checkbox name="generos" options={genres} />
 
       <S.Buttons>
         <Button

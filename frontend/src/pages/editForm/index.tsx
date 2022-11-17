@@ -1,13 +1,37 @@
-import React from 'react';
-
-import * as S from './styles';
-
-type editFormProps = {};
+import React from "react";
+import { Content } from "../../components/Content";
+import { FormModel } from "../../components/Form";
+import { Loader } from "../../components/Loader";
+import { useDataResults } from "../../contexts/dataContext";
+import { convertDate, convertTime } from "../../utils";
 
 export function EditForm() {
-  return (
-    <S.Container>
+  const { moviesDetails, isMoviesDetailsLoading } = useDataResults();
 
-    </S.Container>
+  // console.log(moviesDetails);
+
+  const movie = {
+    titulo: moviesDetails ? moviesDetails.titulo : "",
+    tempo: moviesDetails ? convertTime(moviesDetails.tempo) : "",
+    data_de_estreia: moviesDetails
+      ? convertDate(moviesDetails.data_de_estreia)
+      : "",
+    resumo: moviesDetails ? moviesDetails.resumo : "",
+    titulos_equivalentes: moviesDetails
+      ? moviesDetails.titulos_equivalentes?.toString()
+      : "",
+    generos: moviesDetails
+      ? moviesDetails.generos?.map((gen) => gen.id_genero)
+      : [],
+  };
+
+  return (
+    <Content>
+      {isMoviesDetailsLoading ? (
+        <Loader />
+      ) : (
+        <FormModel action="update" movieData={movie} movieId={moviesDetails?.id_filme} />
+      )}
+    </Content>
   );
 }
