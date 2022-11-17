@@ -29,10 +29,12 @@ export const genres = [
   { value: 11, label: "Suspense" },
 ];
 
-export function convertTime(time: string) {
+export function convertTime(time: string, page?: 'details' | undefined) {
+  if (page === 'details') return format(new Date(time.slice(0, -1)), "HH'h'mm'min'");
   return format(new Date(time.slice(0, -1)), "HH:mm");
 }
 
-export function convertDate(date: string) {
+export function convertDate(date: string, page?: 'details' | undefined) {
+  if (page === 'details') return format(new Date(date.slice(0, -1)), "dd/MM/yyyy");
   return format(new Date(date.slice(0, -1)), "yyyy-MM-dd");
 }
