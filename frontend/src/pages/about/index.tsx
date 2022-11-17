@@ -10,7 +10,7 @@ export function About() {
             <p>
               Letícia Oliveira
               <br />
-              <img className="github" src="../../../public/assets/icons/github-icon.png" alt="" />
+              <img className="github" src="/src/assets/icons/github-icon.png" alt="" />
             </p>
           </a>
         </button>
@@ -19,7 +19,7 @@ export function About() {
             <img src="https://avatars.githubusercontent.com/u/82289818?v=4" alt="" />
             <p>
               Marcos Paulo <br />
-              <img className="github" src="../../../public/assets/icons/github-icon.png" alt="" />
+              <img className="github" src="/src/assets/icons/github-icon.png" alt="" />
             </p>
           </a>
         </button>
@@ -28,7 +28,7 @@ export function About() {
             <img src="https://avatars.githubusercontent.com/u/76262266?v=4" alt="" />
             <p>
               Rodrigo Nunes <br />
-              <img className="github" src="../../../public/assets/icons/github-icon.png" alt="" />
+              <img className="github" src="/src/assets/icons/github-icon.png" alt="" />
             </p>
           </a>
         </button>

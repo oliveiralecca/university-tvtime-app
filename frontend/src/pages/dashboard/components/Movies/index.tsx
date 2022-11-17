@@ -54,7 +54,7 @@ export function Movies() {
               poster={
                 filme.capa
                   ? `${api.defaults.baseURL}/${filme.capa}`
-                  : "../../../public/assets/icons/no-photo.gif"
+                  : "/src/assets/icons/no-photo.gif"
               }
               path={`/filme/${filme.titulo}/detalhes`}
             />
