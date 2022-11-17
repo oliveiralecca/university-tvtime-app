@@ -1,3 +1,5 @@
+import format from "date-fns/format";
+
 export function genreNameTranslate(genreName: string) {
   if (genreName === "Action") return "Ação";
   if (genreName === "Adventure") return "Aventura";
@@ -14,15 +16,23 @@ export function genreNameTranslate(genreName: string) {
 }
 
 export const genres = [
-  { value: 1, label: 'Ação' },
-  { value: 2, label: 'Aventura' },
-  { value: 3, label: 'Comédia' },
-  { value: 4, label: 'Drama' },
-  { value: 5, label: 'Fantasia' },
-  { value: 6, label: 'Terror' },
-  { value: 7, label: 'Mistério' },
-  { value: 8, label: 'Romance' },
-  { value: 9, label: 'Ficção' },
-  { value: 10, label: 'Sobrenatural' },
-  { value: 11, label: 'Suspense' },
-]
+  { value: 1, label: "Ação" },
+  { value: 2, label: "Aventura" },
+  { value: 3, label: "Comédia" },
+  { value: 4, label: "Drama" },
+  { value: 5, label: "Fantasia" },
+  { value: 6, label: "Terror" },
+  { value: 7, label: "Mistério" },
+  { value: 8, label: "Romance" },
+  { value: 9, label: "Ficção" },
+  { value: 10, label: "Sobrenatural" },
+  { value: 11, label: "Suspense" },
+];
+
+export function convertTime(time: string) {
+  return format(new Date(time.slice(0, -1)), "HH:mm");
+}
+
+export function convertDate(date: string) {
+  return format(new Date(date.slice(0, -1)), "yyyy-MM-dd");
+}
