@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { EmptyState } from "../../../../components/EmptyState";
+import { NoPhotoIcon } from "../../../../components/Icons";
 import { Loader } from "../../../../components/Loader";
 import { MovieCard } from "../../../../components/MovieCard";
 import { useDataResults } from "../../../../contexts/dataContext";
@@ -54,7 +55,7 @@ export function Movies() {
               poster={
                 filme.capa
                   ? `${api.defaults.baseURL}/${filme.capa}`
-                  : "/src/assets/icons/no-photo.gif"
+                  : <NoPhotoIcon />
               }
               path={`/filme/${filme.titulo}/detalhes`}
             />

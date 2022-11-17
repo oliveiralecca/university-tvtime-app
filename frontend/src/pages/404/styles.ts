@@ -8,7 +8,9 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  gap: 15px;
+  svg {
+    height: 80%;
+  }
 
   a:nth-child(2) {
     display: none;

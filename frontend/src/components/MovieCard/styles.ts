@@ -10,11 +10,18 @@ export const Container = styled(Link)`
   position: relative;
 
   color: #fff;
-  background: #2f2d52;
+  background-color: #d0d0d0;
+
 
   border-radius: 30px;
   height: 320px;
   width: 220px;
+
+  svg {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 60px;
+  }
 `;
 
 export const Poster = styled.img`

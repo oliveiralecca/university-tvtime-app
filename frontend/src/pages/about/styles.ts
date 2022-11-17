@@ -28,10 +28,11 @@ export const Body = styled.body`
   }
 
   .github {
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
     margin-top: 0px;
     padding:2px;
+    fill: #3F3E6D;
   }
 
   p {
