@@ -4,7 +4,7 @@ import { FormModel } from '../../components/Form';
 
 export function RegisterForm() {
   return (
-    <Content>
+    <Content className="form">
       <FormModel action="create" />
     </Content>
   );

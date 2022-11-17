@@ -26,11 +26,15 @@ export function EditForm() {
   };
 
   return (
-    <Content>
+    <Content className="form">
       {isMoviesDetailsLoading ? (
         <Loader />
       ) : (
-        <FormModel action="update" movieData={movie} movieId={moviesDetails?.id_filme} />
+        <FormModel
+          action="update"
+          movieData={movie}
+          movieId={moviesDetails?.id_filme}
+        />
       )}
     </Content>
   );

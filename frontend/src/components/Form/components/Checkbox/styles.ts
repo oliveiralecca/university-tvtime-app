@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 400px;
+  width: 100%;
 
   label {
     display: block;

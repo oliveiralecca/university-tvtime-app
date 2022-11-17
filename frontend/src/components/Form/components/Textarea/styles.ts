@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  width: 100%;
+`;
 
 export const Textarea = styled.textarea`
   display: flex;
   flex-direction: column;
 
-  width: 400px;
+  width: 100%;
   resize: none;
   margin-top: 5px;
 
