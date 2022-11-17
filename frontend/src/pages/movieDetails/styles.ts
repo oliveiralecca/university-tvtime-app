@@ -22,8 +22,8 @@ export const Container = styled.div`
   .title-geners {
     background-color: #211F41;
     width: 767px;
-    height: 200px;
-    margin-bottom: -300px;
+    height: 330px;
+    margin-top: 75px;
     grid-area: logo;
     border-radius: 26px;
     
@@ -38,35 +38,37 @@ export const Container = styled.div`
   .description {
     background-color: #211F41;
     width: 767px;
-    height: 226px;
+    height: fit-content;
     margin-bottom: 30px;
-    border-radius: 38px;
-    
-    
+    border-radius: 26px;
+    padding-bottom: 20px;
   }
 
-  .genero > button {
+  .genero > div {
+    padding: 0 20px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .genero > div > button {
     background-color: #3f3e6d;
     border-style: none;
     border-radius: 40px;
-    border-width: 2px;
-    width: 40px;
-    height: 50px;
-    margin: 0 6px 1px;
-    width: 68px;
+
     height: 28px;
+    width: fit-content;
+
+    padding: 8px;
+
     color: white;
   }
-
-
-  
 
   h1 {
     text-align: center;
     margin-bottom: 10px;
     background-color: #FE6737;
-    border-top-left-radius: 38px;
-    border-top-right-radius: 38px;
+    border-top-left-radius: 26px;
+    border-top-right-radius: 26px;
   }
   
   h4 {
