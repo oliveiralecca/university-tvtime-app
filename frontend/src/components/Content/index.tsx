@@ -3,11 +3,12 @@ import * as S from "./styles";
 
 type ContentProps = {
   children: ReactNode;
+  className?: string;
 }
 
-export function Content({ children }: ContentProps) {
+export function Content({ children, className }: ContentProps) {
   return (
-    <S.Content>
+    <S.Content className={className}>
       {children}
     </S.Content>
   );

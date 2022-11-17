@@ -12,4 +12,8 @@ export const Content = styled.div`
   section:last-child {
     flex: 1;
   }
+
+  &.form {
+    align-items: center;
+  }
 `;
