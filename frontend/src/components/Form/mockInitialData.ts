@@ -1,7 +1,7 @@
 export const initialData = {
   titulo: "", // input text
   tempo: "", // 00:00 => input time
-  data_de_estreia: "", // input datetime-local
+  data_de_estreia: "", // input date
   resumo: "", // textarea
   titulos_equivalentes: "", // pensar nesse
   capa: "", // input image
@@ -12,7 +12,7 @@ export const initialData = {
 // {
 //   "titulo": "Meu filme", 
 //   "tempo": "01:35", 
-//   "data_de_estreia": "2022-11-14T22:56:41.514Z", 
+//   "data_de_estreia": "2022-11-14", 
 //   "titulos_equivalentes": "A Era do Gelo, A paciente silenciosa",
 //   "generos": [1, 5] 
 // }

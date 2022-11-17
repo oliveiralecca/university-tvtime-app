@@ -2,6 +2,7 @@ import { ReactComponent as About} from "../../assets/icons/about-icon.svg";
 import { ReactComponent as AllIcon } from "../../assets/icons/squares.svg";
 import { ReactComponent as ArrowLeftIcon } from "../../assets/icons/arrow-left.svg";
 import { ReactComponent as ArrowRightIcon } from "../../assets/icons/arrow-right.svg";
+import { ReactComponent as CancelIcon } from "../../assets/icons/cancel.svg";
 import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg";
 import { ReactComponent as EditorIcon } from "../../assets/icons/pencil.svg";
 import { ReactComponent as GenresIcon } from "../../assets/icons/ghost.svg";
@@ -15,6 +16,7 @@ export {
   AllIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
+  CancelIcon,
   EditIcon,
   EditorIcon,
   GenresIcon,

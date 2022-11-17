@@ -8,16 +8,16 @@ type Props = {
   label: string;
 }
 
-type InputProps = JSX.IntrinsicElements['input'] & Props;
+type InputProps = JSX.IntrinsicElements['textarea'] & Props;
 
-export function Input({ name, label, ...rest }: InputProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
+export function Textarea({ name, label, ...rest }: InputProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: inputRef.current,
+      ref: textareaRef.current,
       path: "value",
     });
   }, [fieldName, registerField]);
@@ -25,7 +25,7 @@ export function Input({ name, label, ...rest }: InputProps) {
   return (
     <S.Container>
       <label htmlFor={fieldName}>{label}</label>
-      <S.Input ref={inputRef as any} defaultValue={defaultValue} {...rest} />
+      <S.Textarea ref={textareaRef as any} defaultValue={defaultValue} {...rest} />
       {error && <span>{error}</span>}
     </S.Container>
   );
