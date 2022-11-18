@@ -17,6 +17,14 @@ export const Container = styled.div`
     height: 451px;
     margin-bottom: 20px;
     text-align: center;
+
+    div {
+      svg {
+        width: 200px;
+        height: 200px;
+        
+      }
+    }
   }
 
   .title-geners {

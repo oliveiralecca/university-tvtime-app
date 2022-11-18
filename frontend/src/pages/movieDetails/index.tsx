@@ -1,7 +1,8 @@
+import { ReactNode } from "react";
 import { Content } from "../../components/Content";
+import { NoPhotoIcon } from "../../components/Icons";
 import { Loader } from "../../components/Loader";
 import { useDataResults } from "../../contexts/dataContext";
-import api from "../../services/api";
 import { convertDate, convertTime, genreNameTranslate } from "../../utils";
 import * as S from "./styles";
 
@@ -16,15 +17,15 @@ export function MovieDetails() {
         <S.Container>
           <div className="capa">
             <div>
-              <img
-                className="cover"
-                src={
-                  moviesDetails?.capa
-                    ? moviesDetails.capa
-                    : "/src/assets/icons/no-photo.gif"
-                }
-                alt={moviesDetails?.titulo}
-              />
+              {moviesDetails?.capa ? (
+                <img
+                  className="cover"
+                  src={moviesDetails?.capa ? moviesDetails.capa : undefined}
+                  alt={moviesDetails?.titulo}
+                />
+              ) : (
+                <NoPhotoIcon className="cover" />
+              )}
               <p>
                 {`Data de estreia: ${convertDate(
                   moviesDetails?.data_de_estreia!,
