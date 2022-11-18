@@ -22,7 +22,7 @@ export const Container = styled.div`
       svg {
         width: 200px;
         height: 200px;
-        
+        margin: 80px 0;
       }
     }
   }
