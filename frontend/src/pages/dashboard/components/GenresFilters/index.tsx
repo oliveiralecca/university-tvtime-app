@@ -60,7 +60,7 @@ export function GenresFilters() {
               isActive={active === genre.id_genero}
               onClick={() => handleFetchMoviesByGenre(genre.id_genero)}
               name={genreNameTranslate(genre.nome)}
-              icon={`${api.defaults.baseURL}/${genre.icone}`}
+              icon={genre.icone}
             />
           ))}
         </>

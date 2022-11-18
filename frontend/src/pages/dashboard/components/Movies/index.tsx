@@ -52,11 +52,7 @@ export function Movies() {
               key={`${filme.id_filme}-${idx}`}
               onClick={() => handleFetchMovieDetails(filme.id_filme)}
               name={filme.titulo}
-              poster={
-                filme.capa
-                  ? `${api.defaults.baseURL}/${filme.capa}`
-                  : <NoPhotoIcon />
-              }
+              poster={filme.capa ? filme.capa : <NoPhotoIcon />}
               path={`/filme/${filme.titulo}/detalhes`}
             />
           ))) || <EmptyState />
