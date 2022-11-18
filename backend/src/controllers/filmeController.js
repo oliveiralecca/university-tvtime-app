@@ -2,8 +2,8 @@ const Filme = require('../models/filmeModel');
 
 exports.index = async (req,res) => {
     try {  
-        const generos = await Filme.getAllGeneros();
-        res.json(generos);
+        res.locals.generos = await Filme.getAllGeneros();
+        res.render("createFilme");
     } catch(e) {
         console.log(e)
     }
@@ -11,6 +11,7 @@ exports.index = async (req,res) => {
 
 exports.register = async(req,res) => {
     try {
+        console.log(req.file)
         const filme = new Filme(req)
         await filme.createFilme();
         if (filme.errors.length > 0){
@@ -53,19 +54,16 @@ exports.single = async(req,res) => {
 
 exports.update = async(req,res) => {
     if (!req.params.id_filme) {
-        req.file && await Filme.removeImage(req.file.filename);
         return res.status(400).send({errors: ["Id não encontrado"]})
     }
     try {
         const filme = new Filme(req)
         await filme.updateFilme(req.params.id_filme);
         if (filme.errors.length > 0){
-            req.file && await Filme.removeImage(req.file.filename);
             return res.status(400).send({errors: filme.errors})
         }
         return res.json(filme.filme)
     } catch(e) {
-        req.file && await Filme.removeImage(req.file.filename);
         console.log(e)
         return res.status(400).send({errors: [e]})
     }

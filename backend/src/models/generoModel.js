@@ -1,6 +1,4 @@
 const { PrismaClient } = require('@prisma/client');
-const path = require('path');
-const fs = require('fs');
 
 const prisma = new PrismaClient();
 
@@ -18,7 +16,7 @@ class Genero {
         this.genero = await prisma.genero.create({
             data: {
                 nome,
-                icone: this.req.file?'/assets/images/icones/' + this.req.file.filename:null,
+                icone: this.req.file?this.req.file.firebaseUrl:null,
                 video_tem: filmesInt.length > 0?{
                     create: filmesInt.map(film => {
                         return {id_video: film};
@@ -60,13 +58,11 @@ class Genero {
         const {nome, filmes} = this.body;
         let filmesInt = filmes?filmes.map(film => Number(film)):[];
 
-        await Genero.removeImage(genero.icone);
-
         this.genero = await prisma.genero.update({
             where: {id_genero: genero.id_genero},
             data: {
                 nome,
-                icone: this.req.file?'/assets/images/icones/' + this.req.file.filename:null,
+                icone: this.req.file?this.req.file.firebaseUrl:null,
                 video_tem: filmesInt.length > 0?{
                     create: filmesInt.map(film => {
                         return {id_video: film};
@@ -84,18 +80,9 @@ class Genero {
             await prisma.$disconnect();
             return;
         }
-        await Genero.removeImage(genero.icone);
         await prisma.genero.delete({where: {id_genero: genero.id_genero}});
         await prisma.$disconnect();
     }
-
-    static async removeImage(file) {      
-        if (file) {
-            const filmeFile = ((file).split('/'));
-            const capaPath = path.resolve('public', 'assets', 'images', 'icones', filmeFile[filmeFile.length - 1]);
-            if(fs.existsSync(capaPath)) await fs.promises.unlink(capaPath);
-        }
-    };
 
 }
 

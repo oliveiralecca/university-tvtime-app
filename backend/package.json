@@ -1,26 +1,25 @@
 {
-  "name": "aulabdatividade",
-  "version": "1.0.0",
-  "description": "",
-  "main": ".main.js",
+  "name": "tvtimeapi",
+  "description": "CRUD tvtime api",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "engines": {
+    "node": "16"
+  },
+  "main": "./src/server.js",
   "dependencies": {
     "@prisma/client": "^4.5.0",
     "cors": "^2.8.5",
-    "csurf": "^1.11.0",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
+    "firebase-admin": "^10.3.0",
     "multer": "^1.4.5-lts.1",
+    "prisma": "^4.5.0",
     "sucrase": "^3.28.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20",
-    "prisma": "^4.5.0"
-  }
+    "nodemon": "^2.0.20"
+  },
+  "private": true
 }

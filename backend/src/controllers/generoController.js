@@ -43,12 +43,10 @@ exports.update = async(req,res) => {
         const genero = new Genero(req)
         await genero.updateGenero(req.params.id_genero);
         if (genero.errors.length > 0){
-            req.file && await Genero.removeImage(req.file.filename);
             return res.json({errors: genero.errors})
         }
         return res.json(genero.genero)
     } catch(e) {
-        req.file && await Genero.removeImage(req.file.filename);
         console.log(e)
         return res.json({errors: "Erro na edição de gênero"})
     }

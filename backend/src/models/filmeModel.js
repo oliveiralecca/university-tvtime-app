@@ -1,6 +1,4 @@
 const { PrismaClient } = require('@prisma/client');
-const fs = require('fs');
-const path = require('path');
 
 const prisma = new PrismaClient();
 
@@ -50,7 +48,7 @@ class Filme {
             data: {
                 titulos_equivalentes: titulosEquivalentesArray,
                 id_video: video.id_video,
-                capa: this.req.file?'/assets/images/capas/' + this.req.file.filename:null,
+                capa: this.req.file?this.req.file.firebaseUrl:null,
             }
         });
         this.filme = {...video, ...filme};
@@ -108,15 +106,12 @@ class Filme {
         tempoDate.setUTCHours(Number(horas),Number(minutos));
         let generosInt = generos?generos.map(gen => Number(gen)):[];
         
-        
-  
-        await Filme.removeImage(filme.capa);
 
         filme = await prisma.filme.update({
             where: {id_filme: filme.id_filme},
             data: {
                 titulos_equivalentes: titulosEquivalentesArray,
-                capa: this.req.file?'/assets/images/capas/' + this.req.file.filename:null,
+                capa: this.req.file?this.req.file.firebaseUrl:null,
             }
         });
         const video = await prisma.video.update({
@@ -148,18 +143,10 @@ class Filme {
             await prisma.$disconnect();
             return;
         }
-        await Filme.removeImage(filme.capa);
         await prisma.video.delete({where: {id_video: filme.id_video}});
         await prisma.$disconnect();
     }
 
-    static async removeImage(file) {      
-        if (file) {
-            const filmeFile = ((file).split('/'));
-            const capaPath = path.resolve('public', 'assets', 'images', 'capas', filmeFile[filmeFile.length - 1]);
-            if(fs.existsSync(capaPath)) await fs.promises.unlink(capaPath);
-        }
-    };
 
     validate() {
         this.cleanUp();
