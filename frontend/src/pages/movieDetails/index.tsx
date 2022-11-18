@@ -20,7 +20,7 @@ export function MovieDetails() {
                 className="cover"
                 src={
                   moviesDetails?.capa
-                    ? `${api.defaults.baseURL}/${moviesDetails.capa}`
+                    ? moviesDetails.capa
                     : "/src/assets/icons/no-photo.gif"
                 }
                 alt={moviesDetails?.titulo}
