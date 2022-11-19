@@ -25,7 +25,7 @@ route.post("/genero/register", managerIcone, uploadImage, generoController.regis
 route.get("/genero/list", generoController.list)
 route.get("/genero/list/:id_genero", generoController.single);
 route.put("/genero/update/:id_genero",managerIcone, uploadImage, generoController.update);
-route.delete("/genero/delete/:id_genero",generoController.delete);
+route.delete("/genero/delete/:id_genero",uploadImage,generoController.delete);
 
 
 module.exports = route;

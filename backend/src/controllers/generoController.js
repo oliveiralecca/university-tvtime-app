@@ -6,6 +6,7 @@ exports.register = async (req,res) => {
         await genero.createGenero();
         res.json(genero.genero)
     } catch(e) {
+        req.file && await Genero.deleteIcone(req.file.firebaseUrl, req.bucket);
         console.log(e);
         res.json({errors: "Erro na criação do gênero"})
     }
@@ -38,7 +39,10 @@ exports.single = async(req,res) => {
 }
 
 exports.update = async(req,res) => {
-    if (!req.params.id_genero) return res.json({errors: "Id não encontrado"})
+    if (!req.params.id_genero) {
+        req.file && await Genero.deleteIcone(req.file.firebaseUrl, req.bucket);
+        return res.json({errors: "Id não encontrado"})
+    }
     try {
         const genero = new Genero(req)
         await genero.updateGenero(req.params.id_genero);
@@ -47,7 +51,8 @@ exports.update = async(req,res) => {
         }
         return res.json(genero.genero)
     } catch(e) {
-        console.log(e)
+        req.file && await Genero.deleteIcone(req.file.firebaseUrl, req.bucket);
+        console.log(e);
         return res.json({errors: "Erro na edição de gênero"})
     }
     

@@ -55,6 +55,7 @@ class Genero {
             await prisma.$disconnect();
             return
         }
+        await Genero.deleteIcone(genero.icone, this.req.bucket);
         const {nome, filmes} = this.body;
         let filmesInt = filmes?filmes.map(film => Number(film)):[];
 
@@ -75,6 +76,7 @@ class Genero {
 
     async deleteGenero(id) {
         const genero = await prisma.genero.findUnique({where: {id_genero: Number(id)}});
+        await Genero.deleteIcone(genero.icone, this.req.bucket);
         if (!genero) {
             this.errors.push("Genero não encontrado");
             await prisma.$disconnect();
@@ -82,6 +84,17 @@ class Genero {
         }
         await prisma.genero.delete({where: {id_genero: genero.id_genero}});
         await prisma.$disconnect();
+    }
+
+    static async deleteIcone(fileName,bucket) {
+        try {
+            if(fileName && typeof fileName === "string" && bucket) {
+                const iconeSplited = fileName.split('/')
+                const file = bucket.file(iconeSplited[iconeSplited.length - 1]);
+                await file.delete();
+            } 
+        } catch(e) {console.log(e)};
+        
     }
 
 }
