@@ -95,6 +95,8 @@ class Filme {
             return;
         }
 
+        await Filme.deleteCapa(filme.capa, this.req.bucket);
+
         const video_tem = await prisma.video_tem.findMany({where: {id_video: filme.id_video}});
 
         const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body;
@@ -138,6 +140,7 @@ class Filme {
 
     async deleteFilme(id) {
         const filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
+        await Filme.deleteCapa(filme.capa, this.req.bucket);
         if (!filme) {
             this.errors.push("Filme não encontrado");
             await prisma.$disconnect();
@@ -169,6 +172,17 @@ class Filme {
             generos: (typeof this.body.generos === 'object')?this.body.generos:'',
             capa: this.body.capa,
         }
+    }
+
+    static async deleteCapa(fileName,bucket) {
+        try {
+            if(fileName && typeof fileName === "string" && bucket) {
+                const capaSplited = fileName.split('/')
+                const file = bucket.file(capaSplited[capaSplited.length - 1]);
+                await file.delete();
+            } 
+        } catch(e) {console.log(e)};
+        
     }
 
 }

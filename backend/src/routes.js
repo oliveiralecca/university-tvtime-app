@@ -18,7 +18,7 @@ route.post("/filme/register", managerCapa, uploadImage, filmeController.register
 route.get("/filme/list", filmeController.list);
 route.get("/filme/list/:id_filme", filmeController.single);
 route.put("/filme/update/:id_filme",managerCapa, uploadImage,filmeController.update);
-route.delete("/filme/delete/:id_filme",filmeController.delete);
+route.delete("/filme/delete/:id_filme", uploadImage,filmeController.delete);
 
 // Rotas de genero
 route.post("/genero/register", managerIcone, uploadImage, generoController.register);

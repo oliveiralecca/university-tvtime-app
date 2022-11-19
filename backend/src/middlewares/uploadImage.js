@@ -15,8 +15,11 @@ admin.initializeApp({
 const bucket = admin.storage().bucket();
 
 const uploadImage = (req,res,next) => {
-    if(!req.file) return next();
-    console.log(req.file)
+    
+    req.bucket = bucket;
+    if(!req.file || (req.method !== "PUT" && req.method !== "POST") ) return next();
+    
+
 
     const imagem = req.file;
     const imagemParts = imagem.originalname.split('.');

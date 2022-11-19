@@ -11,7 +11,6 @@ exports.index = async (req,res) => {
 
 exports.register = async(req,res) => {
     try {
-        console.log(req.file)
         const filme = new Filme(req)
         await filme.createFilme();
         if (filme.errors.length > 0){
@@ -19,6 +18,7 @@ exports.register = async(req,res) => {
         }
         return res.json(filme.filme)
     } catch(e) {
+        req.file && await Filme.deleteCapa(req.file.firebaseUrl, req.bucket);
         console.log(e)
         return res.status(400).send({errors: [e]})
     }
@@ -54,6 +54,7 @@ exports.single = async(req,res) => {
 
 exports.update = async(req,res) => {
     if (!req.params.id_filme) {
+        req.file && await Filme.deleteCapa(req.file.firebaseUrl, req.bucket);
         return res.status(400).send({errors: ["Id não encontrado"]})
     }
     try {
@@ -64,6 +65,7 @@ exports.update = async(req,res) => {
         }
         return res.json(filme.filme)
     } catch(e) {
+        req.file && await Filme.deleteCapa(req.file.firebaseUrl, req.bucket);
         console.log(e)
         return res.status(400).send({errors: [e]})
     }
