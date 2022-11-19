@@ -9,13 +9,14 @@ type Props = {
     value: number;
     label: string;
   }[];
+  checkedOptions?: number[];
 };
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & Props;
 
-export function Checkbox({ name, options, ...rest }: InputProps) {
+export function Checkbox({ name, options, checkedOptions, ...rest }: InputProps) {
   const inputRefs = useRef<HTMLInputElement[]>([]);
-  const { fieldName, registerField, defaultValue = [] } = useField(name);
+  const { fieldName, registerField, defaultValue = checkedOptions ?? [] } = useField(name);
 
   useEffect(() => {
     registerField({

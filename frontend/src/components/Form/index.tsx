@@ -103,7 +103,7 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
         rows={2}
       />
 
-      <Checkbox name="generos" options={genres} />
+      <Checkbox name="generos" options={genres} checkedOptions={movieData?.generos} />
 
       {/* <Input
         name="capa"
