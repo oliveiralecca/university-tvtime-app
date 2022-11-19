@@ -42,7 +42,7 @@ export function MovieDetails() {
               <h1>{moviesDetails?.titulo}</h1>
               <div>
                 {moviesDetails?.generos.map((gen) => (
-                  <button>{genreNameTranslate(gen.nome)}</button>
+                  <button key={gen.id_genero}>{genreNameTranslate(gen.nome)}</button>
                 ))}
               </div>
             </div>

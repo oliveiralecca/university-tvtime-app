@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.aside`
   padding: 30px 10px;
   margin: -30px 0 -30px -30px;
+  z-index: 10;
 
   width: 70px;
   height: 100%;
