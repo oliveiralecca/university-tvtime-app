@@ -11,9 +11,9 @@ const managerIcone = require("./middlewares/managerIcone")
 const uploadImage = require("./middlewares/uploadImage");
 
 
+route.get("/", (req,res) => res.render("home"))
 
 // Rotas de filme
-route.get("/filme/index", filmeController.index);
 route.post("/filme/register", managerCapa, uploadImage, filmeController.register);
 route.get("/filme/list", filmeController.list);
 route.get("/filme/list/:id_filme", filmeController.single);

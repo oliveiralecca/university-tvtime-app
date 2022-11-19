@@ -1,14 +1,5 @@
 const Filme = require('../models/filmeModel');
 
-exports.index = async (req,res) => {
-    try {  
-        res.locals.generos = await Filme.getAllGeneros();
-        res.render("createFilme");
-    } catch(e) {
-        console.log(e)
-    }
-}
-
 exports.register = async(req,res) => {
     try {
         const filme = new Filme(req)

@@ -1,6 +1,4 @@
 node_modules
-# Keep environment variables out of version control
 .env
 prismacomandos.txt
-views
 firebase-key.json
