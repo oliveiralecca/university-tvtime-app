@@ -23,7 +23,6 @@ export default function ImageInput({ name, label, ...rest }: InputProps) {
 
   const handlePreview = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    console.log(file?.name);
 
     if (!file) {
       setPreview(null);

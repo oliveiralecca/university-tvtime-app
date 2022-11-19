@@ -8,8 +8,6 @@ import { convertDate, convertTime } from "../../utils";
 export function EditForm() {
   const { moviesDetails, isMoviesDetailsLoading } = useDataResults();
 
-  // console.log(moviesDetails);
-
   const movie = {
     titulo: moviesDetails ? moviesDetails.titulo : "",
     tempo: moviesDetails ? convertTime(moviesDetails.tempo) : "",
@@ -20,6 +18,7 @@ export function EditForm() {
     titulos_equivalentes: moviesDetails
       ? moviesDetails.titulos_equivalentes?.toString()
       : "",
+    capa: moviesDetails ? moviesDetails.capa : "",
     generos: moviesDetails
       ? moviesDetails.generos?.map((gen) => gen.id_genero)
       : [],

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import { Input } from "./components/Input";
 import { Button } from "./components/Button";
@@ -50,9 +50,14 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
         abortEarly: false,
       });
 
-      // console.log(data);
-      if (action === "create") api.post("/filme/register", data);
-      if (action === "update") api.put(`/filme/update/${movieId}`, data);
+      if (action === "create")
+        api.post("/filme/register", data, {
+          headers: { "content-type": "multipart/form-data" },
+        });
+      if (action === "update")
+        api.put(`/filme/update/${movieId}`, data, {
+          headers: { "content-type": "multipart/form-data" },
+        });
 
       formRef?.current?.setErrors({});
       reset();
@@ -99,18 +104,15 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
       <Textarea
         name="titulos_equivalentes"
         label="Títulos equilvalentes"
-        placeholder="Exemplo: Titulo 1, Título 2, Título 3"
+        placeholder="Exemplo: Título 1, Título 2, Título 3"
         rows={2}
       />
 
-      <Checkbox name="generos" options={genres} checkedOptions={movieData?.generos} />
-
-      {/* <Input
-        name="capa"
-        label="Capa"
-        type="file"
-        accept="image/png, image/jpeg"
-      /> */}
+      <Checkbox
+        name="generos"
+        options={genres}
+        checkedOptions={movieData?.generos}
+      />
 
       <ImageInput name="capa" label="Capa" />
 
