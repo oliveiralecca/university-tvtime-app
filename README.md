@@ -1,5 +1,9 @@
 <div align="center" id="top"> 
-  <!--<a href="https://university-db-project.vercel.app/" target="_blank"><img alt="Demo site" src="https://img.shields.io/badge/%F0%9F%94%97-demo-FF69B4"></a>-->
+  <img src="./.github/app.png" alt="TV Time App Logo" />
+
+  &#xa0;
+
+  <a href="https://tvtime-app.vercel.app" target="_blank"><img alt="Demo site" src="https://img.shields.io/badge/%F0%9F%94%97-demo-FF69B4"></a>
 </div>
 
 <h1 align="center">TV Time App</h1>
@@ -12,13 +16,13 @@
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/oliveiralecca/university-tvtime-app?color=56BEB8">
 </p>
 
-<!-- Status -->
+<!-- Status 
 
 <h4 align="center"> 
 	🚧  TV Time App 🚀 Under construction...  🚧
 </h4>
 
-<hr>
+<hr>-->
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
@@ -32,14 +36,19 @@
 
 <br>
 
+<img src="./.github/screenshot.png" alt="TV Time App Screen" />
+
 ## :dart: About ##
 
-Write here
+In this project, a reinterpretation of the TV Time application was developed as an evaluation from the Database I subject.
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: &nbsp;Feature 1;\
-:heavy_check_mark: &nbsp;Feature 2;
+:heavy_check_mark: &nbsp;Shows the whole movies list on the Home page;\
+:heavy_check_mark: &nbsp;Shows movies filtered by genres;\
+:heavy_check_mark: &nbsp;Shows movies details when clicking on it;\
+:heavy_check_mark: &nbsp;As an admin user, it's possible to see movies registered and delete or update them;\
+:heavy_check_mark: &nbsp;As an admin user, it's possible to register new movies
 
 ## :rocket: Technologies ##
 
@@ -71,9 +80,9 @@ $ cd backend
 $ yarn or npm i
 
 # Run the project
-$ yarn dev:server or npm run dev:server
+$ yarn dev or npm run dev
 
-# The server will initialize in the <http://localhost:3333>
+# The server will initialize in the <http://localhost:3000>
 ```
 
 Web
