@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 
+// Conexão com o banco de dados através da biblioteca Prisma
 const prisma = new PrismaClient();
 
 class Filme {
@@ -15,28 +16,35 @@ class Filme {
         return generos;
     } 
 
+    // Método de criação de filme
     async createFilme() {
+        // Função que valida se os dados enviados atendem às requisições do banco de dados
         this.validate();
 
+        // Caso os dados não sejam validados, desconecta-se do BD e a função é parada 
         if(this.errors.length > 0) {
             await prisma.$disconnect();
             return;
         }
 
+        // Busca pelos dados enviados no body da requisição
         const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body
 
+        // Tratamento de dados
         const [horas,minutos] = tempo.split(':');
         const tempoDate = new Date();
         let titulosEquivalentesArray = titulos_equivalentes?titulos_equivalentes.split(',').map(tit => tit.trim()):[];
         tempoDate.setUTCHours(Number(horas),Number(minutos));
         let generosInt = generos?generos.map(gen => Number(gen)):[];
 
+        // Criação do video base para o filme (relação de generalização)
         const video = await prisma.video.create({
             data: {
                 titulo: titulo,
                 tempo: tempoDate,
                 data_de_estreia: new Date(data_de_estreia),
                 resumo: resumo,
+                // criação da relação n:n com os gêneros enviados no cadastro 
                 video_tem: {
                     create: generosInt.map(gen => {
                         return {id_genero: gen};
@@ -44,6 +52,8 @@ class Filme {
                 },
             }
         });
+
+        // Filme criado com o id do filme criado anteriormente
         const filme = await prisma.filme.create({
             data: {
                 titulos_equivalentes: titulosEquivalentesArray,
@@ -52,9 +62,12 @@ class Filme {
             }
         });
         this.filme = {...video, ...filme};
+        // Desconexão com o banco de dados após a execução de todas as operações
         await prisma.$disconnect();
     }
 
+    // Método de busca por todos os filmes, que gera um array de objetos com os dados
+    // do filme e do vídeo associado ao mesmo
     async getFilmes() {
         const filmes = await prisma.filme.findMany();
         this.filme = await Promise.all(filmes.map(async film => {
@@ -64,6 +77,9 @@ class Filme {
         await prisma.$disconnect();
     }
 
+    // Método de busca por um filme a partir do seu id, gerando um objeto que contêm: os dados do filme,
+    // os dados do vídeo associado ao mesmo e um array com todos os gêneros associados a esse video, 
+    // com a execução do que seria um JOIN (o qual a biblioteca não oferece de maneira direta)
     async getFilme(id) {
         const filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
         if (!filme) {

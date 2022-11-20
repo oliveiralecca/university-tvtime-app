@@ -1,7 +1,9 @@
 const Filme = require('../models/filmeModel');
 
+// Controller de criação de novo filme
 exports.register = async(req,res) => {
     try {
+        // Tratamento dos gêneros para quando eles não são enviados como array (caso de uso da biblietaca axios no frontend)
         if (!req.body.generos) {
             const generos = [];
             for (let i=0; i<11; i++) {
@@ -9,11 +11,16 @@ exports.register = async(req,res) => {
             }
             req.body.generos = generos;
         }
-        const filme = new Filme(req)
+        // Instanciação do model filme
+        const filme = new Filme(req);
+        // Criação de um novo filme
         await filme.createFilme();
+        // Retorno de possiveis erros de validação. Imagem cadastrada é deletada caso ocorram erros
         if (filme.errors.length > 0){
+            req.file && await Filme.deleteCapa(req.file.firebaseUrl, req.bucket);
             return res.status(400).send({errors: filme.errors})
         }
+        // Caso não ocorram erros, retorna um json com o filme cadastrado
         return res.json(filme.filme)
     } catch(e) {
         req.file && await Filme.deleteCapa(req.file.firebaseUrl, req.bucket);
@@ -23,18 +30,21 @@ exports.register = async(req,res) => {
     
 }
 
+// Controller de busca por todos os filmes
 exports.list = async(req,res) => {
     try {
         const filme = new Filme(req);
     
         await filme.getFilmes();
         const generos = await Filme.getAllGeneros();
+        // Retorna todos os filmes e todos os gêneros, já que os mesmos são exibidos na página dos filmes
         res.json({filmes:filme.filme,generos});
     } catch(e) {
         console.log(e)
     }
 }
 
+// Controller de busca por um filme específico
 exports.single = async(req,res) => {
     if (!req.params.id_filme) return res.status(400).send({errors: ["Id não encontrado"]});
     try {
@@ -50,6 +60,7 @@ exports.single = async(req,res) => {
     }
 }
 
+// Controller de atualização de um filme existente
 exports.update = async(req,res) => {
     if (!req.params.id_filme) {
         req.file && await Filme.deleteCapa(req.file.firebaseUrl, req.bucket);
@@ -66,6 +77,7 @@ exports.update = async(req,res) => {
         const filme = new Filme(req)
         await filme.updateFilme(req.params.id_filme);
         if (filme.errors.length > 0){
+            req.file && await Filme.deleteCapa(req.file.firebaseUrl, req.bucket);
             return res.status(400).send({errors: filme.errors})
         }
         return res.json(filme.filme)
@@ -77,6 +89,7 @@ exports.update = async(req,res) => {
     
 }
 
+// Controller de deleção de um filme
 exports.delete = async (req,res) => {
     if (!req.params.id_filme) return res.json({errors: ["Id não encontrado"]})
     try {
