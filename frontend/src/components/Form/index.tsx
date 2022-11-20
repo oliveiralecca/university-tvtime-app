@@ -52,7 +52,7 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
 
       if (action === "create")
         api.post("/filme/register", data, {
-          headers: { "content-type": "multipart/form-data" },         
+          headers: { "content-type": "multipart/form-data" },
         });
       if (action === "update")
         api.put(`/filme/update/${movieId}`, data, {
@@ -61,7 +61,9 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
 
       formRef?.current?.setErrors({});
       reset();
-      // window.location.replace("/home");
+      setTimeout(() => {
+        window.location.replace("/home");
+      }, 3000);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
