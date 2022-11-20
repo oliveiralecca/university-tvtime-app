@@ -24,7 +24,7 @@ export function RegisteredMovies() {
   const notifyError = (msg: string) => toast.error(msg, { autoClose: 3000 });
 
   async function onDelete(id: number) {
-    toast.loading('Excluindo o filme...', { autoClose: 500 });
+    toast.info('Excluindo o filme...', { autoClose: 1500 });
     const response = await api.delete(`/filme/delete/${id}`);
     if (response.data.success) {
       notifySuccess(response.data.success);

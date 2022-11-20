@@ -63,7 +63,7 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
 
       formRef?.current?.setErrors({});
       reset();
-      toast.loading(action === 'create' ? 'Cadastrando o filme...' : 'Atualizando o filme...', { autoClose: 4900 });
+      toast.info(action === 'create' ? 'Cadastrando o filme...' : 'Atualizando o filme...', { autoClose: 4900 });
       setTimeout(() => {
         window.location.replace("/home");
       }, 5000);
