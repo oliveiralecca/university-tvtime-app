@@ -55,7 +55,7 @@ class Genero {
             await prisma.$disconnect();
             return
         }
-        await Genero.deleteIcone(genero.icone, this.req.bucket);
+        this.req.file && await Genero.deleteIcone(genero.icone, this.req.bucket);
         const {nome, filmes} = this.body;
         let filmesInt = filmes?filmes.map(film => Number(film)):[];
 
@@ -63,7 +63,7 @@ class Genero {
             where: {id_genero: genero.id_genero},
             data: {
                 nome,
-                icone: this.req.file?this.req.file.firebaseUrl:null,
+                icone: this.req.file?this.req.file.firebaseUrl:genero.icone,
                 video_tem: filmesInt.length > 0?{
                     create: filmesInt.map(film => {
                         return {id_video: film};

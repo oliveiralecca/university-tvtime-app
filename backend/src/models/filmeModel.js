@@ -94,8 +94,8 @@ class Filme {
             await prisma.$disconnect();
             return;
         }
-
-        await Filme.deleteCapa(filme.capa, this.req.bucket);
+        
+        this.req.file && await Filme.deleteCapa(filme.capa, this.req.bucket);
 
         const video_tem = await prisma.video_tem.findMany({where: {id_video: filme.id_video}});
 
@@ -113,7 +113,7 @@ class Filme {
             where: {id_filme: filme.id_filme},
             data: {
                 titulos_equivalentes: titulosEquivalentesArray,
-                capa: this.req.file?this.req.file.firebaseUrl:null,
+                capa: this.req.file?this.req.file.firebaseUrl:filme.capa,
             }
         });
         const video = await prisma.video.update({
