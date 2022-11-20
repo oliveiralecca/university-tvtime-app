@@ -15,7 +15,7 @@ class Filme {
         return generos;
     } 
 
-    async createFilme(generos) {
+    async createFilme() {
         this.validate();
 
         if(this.errors.length > 0) {
@@ -23,7 +23,7 @@ class Filme {
             return;
         }
 
-        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes} = this.body
+        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body
 
         const [horas,minutos] = tempo.split(':');
         const tempoDate = new Date();
@@ -81,7 +81,7 @@ class Filme {
         await prisma.$disconnect();
     }
 
-    async updateFilme(id, generos) {
+    async updateFilme(id) {
         let filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
         
         if (!filme) {
@@ -99,7 +99,7 @@ class Filme {
 
         const video_tem = await prisma.video_tem.findMany({where: {id_video: filme.id_video}});
 
-        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes} = this.body;
+        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body;
 
 
         const [horas,minutos] = tempo.split(':');

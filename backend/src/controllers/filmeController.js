@@ -2,12 +2,15 @@ const Filme = require('../models/filmeModel');
 
 exports.register = async(req,res) => {
     try {
-        const generos = [];
-        for (let i=0; i<11; i++) {
-            req.body[`generos.${i}`] && generos.push(req.body[`generos.${i}`])
+        if (!req.body.generos) {
+            const generos = [];
+            for (let i=0; i<11; i++) {
+                req.body[`generos.${i}`] && generos.push(req.body[`generos.${i}`])
+            }
+            req.body.generos = generos;
         }
         const filme = new Filme(req)
-        await filme.createFilme(generos);
+        await filme.createFilme();
         if (filme.errors.length > 0){
             return res.status(400).send({errors: filme.errors})
         }
@@ -53,12 +56,15 @@ exports.update = async(req,res) => {
         return res.status(400).send({errors: ["Id não encontrado"]})
     }
     try {
-        const generos = [];
-        for (let i=0; i<11; i++) {
-            req.body[`generos.${i}`] && generos.push(req.body[`generos.${i}`])
+        if (!req.body.generos) {
+            const generos = [];
+            for (let i=0; i<11; i++) {
+                req.body[`generos.${i}`] && generos.push(req.body[`generos.${i}`])
+            }
+            req.body.generos = generos;
         }
         const filme = new Filme(req)
-        await filme.updateFilme(req.params.id_filme, generos);
+        await filme.updateFilme(req.params.id_filme);
         if (filme.errors.length > 0){
             return res.status(400).send({errors: filme.errors})
         }
