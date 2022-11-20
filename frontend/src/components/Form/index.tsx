@@ -63,10 +63,10 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
 
       formRef?.current?.setErrors({});
       reset();
-      toast.loading('Cadastrando o novo filme...', { autoClose: 3000 });
+      toast.loading('Cadastrando o novo filme...', { autoClose: 3100 });
       setTimeout(() => {
         window.location.replace("/home");
-      }, 3100);
+      }, 3200);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
