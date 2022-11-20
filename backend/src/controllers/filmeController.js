@@ -2,8 +2,12 @@ const Filme = require('../models/filmeModel');
 
 exports.register = async(req,res) => {
     try {
+        const generos = [];
+        for (let i=0; i<11; i++) {
+            req.body[`generos.${i}`] && generos.push(req.body[`generos.${i}`])
+        }
         const filme = new Filme(req)
-        await filme.createFilme();
+        await filme.createFilme(generos);
         if (filme.errors.length > 0){
             return res.status(400).send({errors: filme.errors})
         }

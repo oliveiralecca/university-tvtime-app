@@ -52,7 +52,7 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
 
       if (action === "create")
         api.post("/filme/register", data, {
-          headers: { "content-type": "multipart/form-data" },
+          headers: { "content-type": "multipart/form-data" },         
         });
       if (action === "update")
         api.put(`/filme/update/${movieId}`, data, {
@@ -81,11 +81,7 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
   }, []);
 
   return (
-    <S.FormContainer
-      ref={formRef}
-      onSubmit={handleSubmit}
-      encType="multipart/form-data"
-    >
+    <S.FormContainer ref={formRef} onSubmit={handleSubmit}>
       <Input name="titulo" label="Título *" type="text" />
 
       <S.Time>

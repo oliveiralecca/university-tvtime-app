@@ -15,7 +15,7 @@ class Filme {
         return generos;
     } 
 
-    async createFilme() {
+    async createFilme(generos) {
         this.validate();
 
         if(this.errors.length > 0) {
@@ -23,7 +23,7 @@ class Filme {
             return;
         }
 
-        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes, generos} = this.body
+        const {titulo, tempo, data_de_estreia, resumo, titulos_equivalentes} = this.body
 
         const [horas,minutos] = tempo.split(':');
         const tempoDate = new Date();
