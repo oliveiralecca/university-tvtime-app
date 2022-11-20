@@ -63,7 +63,7 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
       reset();
       setTimeout(() => {
         window.location.replace("/home");
-      }, 5000);
+      }, 3500);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
