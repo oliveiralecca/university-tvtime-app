@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Input } from "./components/Input";
 import { Button } from "./components/Button";
 import { ArrowRightIcon } from "../Icons";
@@ -61,6 +63,7 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
 
       formRef?.current?.setErrors({});
       reset();
+      toast.loading('Cadastrando o novo filme...', { autoClose: 3000 });
       setTimeout(() => {
         window.location.replace("/home");
       }, 3100);
@@ -84,6 +87,7 @@ export function FormModel({ action, movieData, movieId }: FormProps) {
 
   return (
     <S.FormContainer ref={formRef} onSubmit={handleSubmit}>
+      <ToastContainer />
       <Input name="titulo" label="Título *" type="text" />
 
       <S.Time>
