@@ -15,7 +15,6 @@ export function Movies() {
     isMoviesByGenreLoading,
     movies,
     isMoviesLoading,
-    setIsMoviesLoading,
     activeGenre,
     setActiveGenre,
     setIsMoviesDetailsLoading,

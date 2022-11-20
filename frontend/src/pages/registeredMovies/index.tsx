@@ -24,8 +24,8 @@ export function RegisteredMovies() {
   const notifyError = (msg: string) => toast.error(msg, { autoClose: 3000 });
 
   async function onDelete(id: number) {
+    toast.loading('Excluindo o filme...', { autoClose: 500 });
     const response = await api.delete(`/filme/delete/${id}`);
-    toast.loading('Excluindo o filme...', { autoClose: 2900 });
     if (response.data.success) {
       notifySuccess(response.data.success);
     }
@@ -50,7 +50,7 @@ export function RegisteredMovies() {
 
   return (
     <Content>
-      <ToastContainer />
+      <ToastContainer newestOnTop />
       {isMoviesLoading ? (
         <Loader center />
       ) : (
