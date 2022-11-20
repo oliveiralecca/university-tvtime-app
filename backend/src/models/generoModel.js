@@ -44,6 +44,10 @@ class Genero {
             const filme = await prisma.filme.findUnique({where: {id_video: video.id_video}});
             return {...video,...filme};
         }));
+        filmes = filmes.filter(movie => {
+            if(movie.id_filme && movie.id_video) return true;
+            return false;
+        })
         this.genero = {...genero,filmes};
         await prisma.$disconnect();
     }
