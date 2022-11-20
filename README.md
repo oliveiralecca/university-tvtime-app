@@ -1,9 +1,9 @@
 <div align="center" id="top"> 
-  <img src="./.github/app.png" alt="TV Time App Logo" />
-
+ <img src="./.github/app.png" alt="TV Time App Logo" />
+  
   &#xa0;
 
-  <a href="https://tvtime-app.vercel.app" target="_blank"><img alt="Demo site" src="https://img.shields.io/badge/%F0%9F%94%97-demo-FF69B4"></a>
+ <a href="https://tvtime-app.vercel.app" target="_blank">Demo</a>
 </div>
 
 <h1 align="center">TV Time App</h1>
