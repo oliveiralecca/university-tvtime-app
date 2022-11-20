@@ -53,8 +53,12 @@ exports.update = async(req,res) => {
         return res.status(400).send({errors: ["Id não encontrado"]})
     }
     try {
+        const generos = [];
+        for (let i=0; i<11; i++) {
+            req.body[`generos.${i}`] && generos.push(req.body[`generos.${i}`])
+        }
         const filme = new Filme(req)
-        await filme.updateFilme(req.params.id_filme);
+        await filme.updateFilme(req.params.id_filme, generos);
         if (filme.errors.length > 0){
             return res.status(400).send({errors: filme.errors})
         }
