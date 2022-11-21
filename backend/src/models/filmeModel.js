@@ -97,6 +97,8 @@ class Filme {
         await prisma.$disconnect();
     }
 
+    // Método para atualização de um filme, funcionando de forma semelhante ao cadastro, apenas com a diferença
+    // de que é necessário fazer uma busca pelo filme com o id enviado na requição e verificar a sua existência
     async updateFilme(id) {
         let filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
         
@@ -154,6 +156,8 @@ class Filme {
         await prisma.$disconnect();
     }
 
+    // Método para deletar um filme. É executado no método apenas a deleção do vídeo, mas
+    // como a relação é em cascata, o filme associado é deletado junto.
     async deleteFilme(id) {
         const filme = await prisma.filme.findUnique({where: {id_filme: Number(id)}});
         await Filme.deleteCapa(filme.capa, this.req.bucket);
@@ -165,7 +169,6 @@ class Filme {
         await prisma.video.delete({where: {id_video: filme.id_video}});
         await prisma.$disconnect();
     }
-
 
     validate() {
         this.cleanUp();
@@ -190,6 +193,8 @@ class Filme {
         }
     }
 
+    // Método para deletar as capas dos filmes do firebaseStorage, usado, por exemplo, quando um filme é deletado
+    // ou quando sua capa é atualizada
     static async deleteCapa(fileName,bucket) {
         try {
             if(fileName && typeof fileName === "string" && bucket) {
