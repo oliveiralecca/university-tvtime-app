@@ -3,7 +3,7 @@
   
   &#xa0;
 
- <a href="https://tvtime-app.vercel.app" target="_blank">Demo</a>
+ <a href="https://tvtime-app.vercel.app" target="_blank">Demo</a><br>
  <a href="https://www.youtube.com/watch?v=UAJZuWCtmU0" target="_blank">Video</a>
 </div>
 
